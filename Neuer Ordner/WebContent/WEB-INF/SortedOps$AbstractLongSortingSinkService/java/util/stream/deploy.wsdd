@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from SortedOps$AbstractLongSortingSinkService WSDL service -->
+
+  <service name="SortedOps$AbstractLongSortingSink" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://stream.util.java"/>
+      <parameter name="wsdlServiceElement" value="SortedOps$AbstractLongSortingSinkService"/>
+      <parameter name="schemaQualified" value="http://stream.util.java"/>
+      <parameter name="wsdlServicePort" value="SortedOps$AbstractLongSortingSink"/>
+      <parameter name="className" value="java.util.stream.SortedOps$AbstractLongSortingSink"/>
+      <parameter name="wsdlPortType" value="SortedOps$AbstractLongSortingSink"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://stream.util.java" xmlns:retNS="http://stream.util.java" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="cancellationRequested" qname="operNS:cancellationRequested" returnQName="retNS:cancellationRequestedReturn" returnType="rtns:boolean" soapAction="">
+      </operation>
+      <parameter name="allowedMethods" value="cancellationRequested"/>
+
+  </service>
+</deployment>
