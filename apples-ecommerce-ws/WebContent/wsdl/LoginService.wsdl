@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://db" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://db" xmlns:intf="http://db" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://db" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="getPublicKey">
+    <complexType/>
+   </element>
+   <element name="getPublicKeyResponse">
+    <complexType>
+     <sequence>
+      <element name="getPublicKeyReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getError">
+    <complexType/>
+   </element>
+   <element name="getErrorResponse">
+    <complexType>
+     <sequence>
+      <element name="getErrorReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="createNewUser">
+    <complexType>
+     <sequence>
+      <element name="salutation" type="xsd:string"/>
+      <element name="name" type="xsd:string"/>
+      <element name="surename" type="xsd:string"/>
+      <element name="country" type="xsd:string"/>
+      <element name="province" type="xsd:string"/>
+      <element name="city" type="xsd:string"/>
+      <element name="street" type="xsd:string"/>
+      <element name="streetNo" type="xsd:string"/>
+      <element name="zip" type="xsd:string"/>
+      <element name="customer_id" type="xsd:int"/>
+      <element name="email" type="xsd:string"/>
+      <element name="pwd" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="createNewUserResponse">
+    <complexType>
+     <sequence>
+      <element name="createNewUserReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="createNewUserResponse">
+
+      <wsdl:part element="impl:createNewUserResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="createNewUserRequest">
+
+      <wsdl:part element="impl:createNewUser" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPublicKeyRequest">
+
+      <wsdl:part element="impl:getPublicKey" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getErrorResponse">
+
+      <wsdl:part element="impl:getErrorResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPublicKeyResponse">
+
+      <wsdl:part element="impl:getPublicKeyResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getErrorRequest">
+
+      <wsdl:part element="impl:getError" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="LoginService">
+
+      <wsdl:operation name="getPublicKey">
+
+         <wsdl:input message="impl:getPublicKeyRequest" name="getPublicKeyRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getPublicKeyResponse" name="getPublicKeyResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getError">
+
+         <wsdl:input message="impl:getErrorRequest" name="getErrorRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getErrorResponse" name="getErrorResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createNewUser">
+
+         <wsdl:input message="impl:createNewUserRequest" name="createNewUserRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:createNewUserResponse" name="createNewUserResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="LoginServiceSoapBinding" type="impl:LoginService">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getPublicKey">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPublicKeyRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPublicKeyResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getError">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getErrorRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getErrorResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="createNewUser">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="createNewUserRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="createNewUserResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="LoginServiceService">
+
+      <wsdl:port binding="impl:LoginServiceSoapBinding" name="LoginService">
+
+         <wsdlsoap:address location="http://localhost:8080/apples-ecommerce-ws/services/LoginService"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
