@@ -1,0 +1,381 @@
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, font, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td
+{
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    vertical-align: baseline;
+}
+
+input, select
+{
+    vertical-align:middle;
+}
+
+sub
+{
+    vertical-align: sub;
+    font-size: smaller;
+}
+strong
+{
+	font-weight:bold;
+}
+sup
+{
+    vertical-align: super;
+    font-size: smaller;
+}
+h3
+{
+	display: inline;
+    font-size: 13px;
+}
+textarea
+{
+    overflow: auto;
+}
+
+input[type="radio"]
+{
+    vertical-align: text-bottom;
+}
+
+input[type="checkbox"]
+{
+    vertical-align: bottom;
+}
+input[type="text"]
+{
+   size:1500px;
+}
+
+button, input, select, textarea
+{
+    margin: 0;
+}
+p
+{
+	font-size:50px;
+	line-height:20px;
+	font-weight: bold;
+}
+a
+{
+	text-decoration:none;
+}
+a:hover
+{
+	color:#008bcf;
+}
+button
+{
+    width: auto;
+    overflow: visible;
+}
+
+
+
+html, body
+{
+    height: 100%;
+}
+
+body
+{
+    position:relative;
+	font-family: "HelveticaNeue-Light", "Helvetica Neue Light", Helvetica, "Trebuchet MS", Verdana, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    /*color: #606161;*/
+    color:#5e5e5e;
+	background: #FFFFFF;
+}
+
+h1,h2,h3,h4,h5,h6
+{
+    color: #555656;
+	font-weight:normal;
+    padding: 8px 0;
+}
+
+h1
+{
+    font-size: 22px;
+	font-weight:100;
+    line-height: 26px;
+	padding:14px 0 8px 0;
+
+}
+h2
+{
+	font-weight:bold;
+	font-size:15px;
+}
+p
+{
+    padding: 0 0;
+	font-weight:150;
+	font-size:13px;
+
+}
+a
+{
+    padding: 0 0;
+	color:#858789;
+	text-decoration:none;
+
+}
+div.clear
+{
+	clear:both;	
+}
+
+#page
+{
+    /*min-height:100%;*/
+    margin: 20px auto;
+    height:auto !important;
+    height:100%;
+    width:998px;
+    position: relative;
+	overflow:hidden;
+}
+#logo
+{
+	float:left;
+	width:213px;
+	height:130px;
+}
+
+#top {
+    float:right;    
+    width:750px;
+}
+
+
+#top ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+#top li {
+    float: left;
+}
+
+#top li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+#top li a:hover:not(.active) {
+    background-color: #111;
+}
+
+#top .active {
+    background-color: #4CAF50;
+}
+
+
+#nav
+{
+	marign:15px 0 0 0;
+	width:199px;
+	padding:5px;
+	float:left;
+}
+
+#nav ul
+{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #f1f1f1;
+    border: 1px solid #555;
+}
+#nav li a
+{
+	display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+#nav li:last-child
+{
+     border-bottom: none;
+}
+#nav li a.active
+{
+    background-color: #4CAF50;
+    color: white;
+}
+
+
+li a:hover:not(.active) {
+    background-color: #555;
+    color: white;
+}
+
+
+#content
+{
+	float:left;
+	margin: 10px 0 0 52px;
+	width:733px;
+}
+#footer
+{
+	margin:20px 0 0 0;
+	text-align:right;	
+}
+p.msg
+{
+	padding:10px 0;
+	font-size:15px;
+	line-height:15px;
+	color:#01a114;	
+}
+p.error
+{
+	padding:10px 0;
+	font-size:15px;
+	line-height:15px;
+	color:#cc0202;	
+}
+
+
+/* Full-width input fields */
+input[type=text], input[type=password] {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+}
+
+/* Set a style for all buttons */
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+}
+
+button:hover {
+    opacity: 0.8;
+}
+
+/* Extra styles for the cancel button */
+.cancelbtn {
+    width: auto;
+    padding: 10px 18px;
+    background-color: #f44336;
+}
+
+/* Center the image and position the close button */
+.imgcontainer {
+    text-align: center;
+    margin: 24px 0 12px 0;
+    position: relative;
+}
+
+img.avatar {
+    width: 40%;
+    border-radius: 50%;
+}
+
+.container {
+    padding: 16px;
+}
+
+span.psw {
+    float: right;
+    padding-top: 16px;
+}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    padding-top: 60px;
+}
+
+/* Modal Content/Box */
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto 15% auto; /* 5% from the top, 15% from the bottom and centered */
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+
+/* The Close Button (x) */
+.close {
+    position: absolute;
+    right: 25px;
+    top: 0;
+    color: #000;
+    font-size: 35px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: red;
+    cursor: pointer;
+}
+
+/* Add Zoom Animation */
+.animate {
+    -webkit-animation: animatezoom 0.6s;
+    animation: animatezoom 0.6s
+}
+
+@-webkit-keyframes animatezoom {
+    from {-webkit-transform: scale(0)} 
+    to {-webkit-transform: scale(1)}
+}
+    
+@keyframes animatezoom {
+    from {transform: scale(0)} 
+    to {transform: scale(1)}
+}
+
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+    span.psw {
+       display: block;
+       float: none;
+    }
+    .cancelbtn {
+       width: 100%;
+    }
+}
+
+
