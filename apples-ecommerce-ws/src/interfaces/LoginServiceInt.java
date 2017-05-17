@@ -1,5 +1,7 @@
 package interfaces;
 
+import java.sql.SQLException;
+
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
@@ -18,6 +20,20 @@ public interface LoginServiceInt {
 	@WebMethod
 	public String getError();
 	@WebMethod
-	boolean login(String email, String pwd);
+	public int login(String email, String pwd);
+	@WebMethod
+	public int loginCookie(String cookieId);
+	@WebMethod
+	public String updateCookieToken(int customerId) throws SQLException;
+	@WebMethod
+	public int getCustomerIdFromToken(String cookieId) throws SQLException;
+	@WebMethod
+	public String getCookieToken() throws SQLException;
+	@WebMethod 
+	public boolean insertNewToken(int customerId, String token);
+	@WebMethod 
+	public boolean updateToken(int customerId, String token);
 	
+
+
 }

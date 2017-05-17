@@ -53,21 +53,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="login">
-    <complexType>
-     <sequence>
-      <element name="usr" type="xsd:string"/>
-      <element name="pwd" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="loginResponse">
-    <complexType>
-     <sequence>
-      <element name="loginReturn" type="xsd:boolean"/>
-     </sequence>
-    </complexType>
-   </element>
   </schema>
   <schema elementFormDefault="qualified" targetNamespace="http://Serializables" xmlns="http://www.w3.org/2001/XMLSchema">
    <complexType name="CustomerObject">
@@ -77,6 +62,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <element name="country" nillable="true" type="xsd:string"/>
      <element name="firstname" nillable="true" type="xsd:string"/>
      <element name="id" type="xsd:int"/>
+     <element name="key" nillable="true" type="xsd:string"/>
      <element name="lastname" nillable="true" type="xsd:string"/>
      <element name="province" nillable="true" type="xsd:string"/>
      <element name="salutation" nillable="true" type="xsd:string"/>
@@ -121,14 +107,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="loginRequest">
-
-      <wsdl:part element="impl:login" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
    <wsdl:message name="findRequest">
 
       <wsdl:part element="impl:find" name="parameters">
@@ -140,14 +118,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:message name="deleteResponse">
 
       <wsdl:part element="impl:deleteResponse" name="parameters">
-
-      </wsdl:part>
-
-   </wsdl:message>
-
-   <wsdl:message name="loginResponse">
-
-      <wsdl:part element="impl:loginResponse" name="parameters">
 
       </wsdl:part>
 
@@ -186,18 +156,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
        </wsdl:input>
 
          <wsdl:output message="impl:modifyResponse" name="modifyResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="login">
-
-         <wsdl:input message="impl:loginRequest" name="loginRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:loginResponse" name="loginResponse">
 
        </wsdl:output>
 
@@ -256,24 +214,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="modifyResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="login">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="loginRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="loginResponse">
 
             <wsdlsoap:body use="literal"/>
 

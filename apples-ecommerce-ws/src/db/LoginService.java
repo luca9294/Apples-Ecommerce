@@ -21,52 +21,48 @@ import connection.ConnectionManager;
 public class LoginService implements interfaces.LoginServiceInt {
 	private String errorString;
 	private CustomerObject customer = null;
-	
+
 	@Override
 	public String getPublicKey() {		
 		String publicKey = "";
 		try{
-		KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-	    SecureRandom random = SecureRandom.getInstance("SHA1PRNG", "SUN");
-	    keyGen.initialize(1024, random);
-	    KeyPair pair = keyGen.generateKeyPair();
-	    PublicKey pub = pair.getPublic();
-	    byte[] b = pub.getEncoded();
-	    publicKey = Base64.encode(b);
+			KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
+			KeyPair pair = keyGen.generateKeyPair();
+			PublicKey pub = pair.getPublic();
+			byte[] b = pub.getEncoded();
+			publicKey = Base64.encode(b);
 		}
 		catch (NoSuchAlgorithmException e){
 			e.printStackTrace();	
 		}
-		catch (NoSuchProviderException e){
-			e.printStackTrace();
-		}
 		return publicKey;
 	}
-	
-    @Override
+
+	@Override
 	public boolean createNewUser(String salutation, String name,
 			String surename, String country, String province,
 			String city, String street,	String streetNo, String zip, int customer_id,
 			String email, String pwd
 			) {
-    
-    	if (existUser(email)){
-    		errorString = "There is already an user with that email!";
-    		return false;
-    	}	
-    	LoginService ls = new LoginService();
-    	String pub = ls.getPublicKey();
-    	byte[] publicBytes = Base64.decode(pub);
-    	X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicBytes);
-    	KeyFactory keyFactory;
+		getCustomerByMail(email);
+
+		if (customer != null){
+			errorString = "There is already an user with that email!";
+			return false;
+		}	
+		LoginService ls = new LoginService();
+		String pub = ls.getPublicKey();
+		byte[] publicBytes = Base64.decode(pub);
+		X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicBytes);
+		KeyFactory keyFactory;
 		try {
 			keyFactory = KeyFactory.getInstance("RSA");
 			PublicKey pubKey = keyFactory.generatePublic(keySpec);
-			 Cipher cipher = Cipher.getInstance("RSA");   
-			 cipher.init(Cipher.ENCRYPT_MODE, pubKey);  
-			 byte[] byteArray = cipher.doFinal(pwd.getBytes());
-			 pwd = Base64.encode(byteArray);
-		
+			Cipher cipher = Cipher.getInstance("RSA");   
+			cipher.init(Cipher.ENCRYPT_MODE, pubKey);  
+			byte[] byteArray = cipher.doFinal(pwd.getBytes());
+			pwd = Base64.encode(byteArray);
+
 		} catch (NoSuchAlgorithmException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -86,7 +82,7 @@ public class LoginService implements interfaces.LoginServiceInt {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
+
 		CustomerObject customer = null;
 		ResultSet resultSet;
 		PreparedStatement preparedStatement;
@@ -117,9 +113,9 @@ public class LoginService implements interfaces.LoginServiceInt {
 				customer = new CustomerObject(resultSet.getInt(1), salutation,
 						name, surename, country, province, city,
 						street, streetNo, zip,email,pwd, pub);
-					connection.commit();					
-				}
-		else {
+				connection.commit();					
+			}
+			else {
 				connection.rollback();
 				return false;
 			}
@@ -130,25 +126,25 @@ public class LoginService implements interfaces.LoginServiceInt {
 		} finally {
 			ConnectionManager.close(connection);
 		}
-		
+
 		if (customer != null)
 			return true;
 		else
 			return false;
 	}
-    
-    //Check whether an user with that same email exists
-    private boolean existUser (String email) {
-    	boolean result = false;
+
+	//Check whether an user with that same email exists
+	private boolean existCookieID (String id) {
+		boolean result = false;
 		ResultSet resultSet;
 		PreparedStatement preparedStatement;
 		Connection connection = ConnectionManager.connect();
 		try {
 			connection.setAutoCommit(false);
 			preparedStatement = connection.prepareStatement(
-					"SELECT * FROM customer WHERE email = ? ");
-			preparedStatement.setString(1, email);
-			
+					"SELECT * FROM cookies WHERE cookie_id = ? ");
+			preparedStatement.setString(1, id);
+
 			// Retrieve the result of RETURNING statement to get the current id.
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {				
@@ -166,10 +162,10 @@ public class LoginService implements interfaces.LoginServiceInt {
 		}
 		return result;
 	}
-    
-    //Check whether an user with that same email exists
-    private  void getCustomerByMail (String email) {
-    	CustomerObject customer;
+
+	//Check whether an user with that same email exists
+	private  void getCustomerByMail (String email) {
+		CustomerObject customer;
 		ResultSet resultSet;
 		PreparedStatement preparedStatement;
 		Connection connection = ConnectionManager.connect();
@@ -178,7 +174,7 @@ public class LoginService implements interfaces.LoginServiceInt {
 			preparedStatement = connection.prepareStatement(
 					"SELECT * FROM customer WHERE email = ?");
 			preparedStatement.setString(1, email);
-			
+
 			// Retrieve the result of RETURNING statement to get the current id.
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {				
@@ -190,6 +186,8 @@ public class LoginService implements interfaces.LoginServiceInt {
 						resultSet.getString(11), resultSet.getString(12),resultSet.getString(9));
 				this.customer = customer;
 			}
+			else
+				customer = null;
 
 			preparedStatement.close();
 			connection.setAutoCommit(true);
@@ -199,26 +197,35 @@ public class LoginService implements interfaces.LoginServiceInt {
 			ConnectionManager.close(connection);
 		}
 	}
-    
+
 	@Override
 	public String getError() {
 		return errorString;
 	}
-	
+
+	//Returns -1 user does not exist. 0 pwd is wrong
 	@Override
-	public boolean login(String email, String pwd) {
-		if  (!existUser(email))
-			return false;
-			return false;
+	public int login(String email, String pwd) {
+		getCustomerByMail(email);
+		//user does not exists
+		if  (customer == null)
+			return -1;
+		else 
+		{
+			if (customer.isPwdMatching(getEncryptedString(customer.getKey(),pwd)))
+				return customer.getId();
+			else
+				return 0;
+		}
 	}
-	
+
 	//Get encrypted pwd using the public key given
 	private String getEncryptedString(String publickey, String inputString){
 		String encryptedStr = ""; 
 		byte[] b = Base64.decode(publickey); 
-		 X509EncodedKeySpec keySpec = new X509EncodedKeySpec(b);
-	     KeyFactory keyFactory;
-		 try {
+		X509EncodedKeySpec keySpec = new X509EncodedKeySpec(b);
+		KeyFactory keyFactory;
+		try {
 			keyFactory = KeyFactory.getInstance("RSA");
 			PublicKey pubKey = keyFactory.generatePublic(keySpec);
 			Cipher cipher = Cipher.getInstance("RSA"); 
@@ -244,10 +251,144 @@ public class LoginService implements interfaces.LoginServiceInt {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		    
 		return encryptedStr;
 	}
-		
-}
 
+	//It returns a new token
+	@Override
+	public String getCookieToken(){
+
+		int randomNum = (int) (Math.pow(10, 8) + (Math.random() * (Math.pow(10, 6)-1)));
+		return (randomNum + "");
+	}
+
+	@Override
+	public int loginCookie(String cookieId)  {
+        int id = 0;
+		if (!this.existCookieID(cookieId)) {
+			id =  -1;
+		}
+		try {
+			id = getCustomerIdFromToken(cookieId);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return id;
+	}
+	
+	@Override
+	public String updateCookieToken(int customerId) throws SQLException{
+		
+		int randomNum = (int) (Math.pow(10, 8) + (Math.random() * (Math.pow(10, 6)-1)));
+
+		Connection dbConnection=null; 
+		PreparedStatement preparedStatement = null;
+
+		String updateTableSQL = "UPDATE cookie SET cookie_id = ? "
+				                  + " WHERE customer_id = ?";
+
+		try {
+			dbConnection = ConnectionManager.connect();
+			preparedStatement = dbConnection.prepareStatement(updateTableSQL);
+
+			preparedStatement.setString(1, (randomNum + ""));
+			preparedStatement.setInt(2, customerId);
+
+			// execute update SQL stetement
+			preparedStatement.executeUpdate();
+
+			System.out.println("Record is updated to cookie table!");
+
+		} catch (SQLException e) {
+
+			System.out.println(e.getMessage());
+
+		} finally {
+
+			if (preparedStatement != null) {
+				preparedStatement.close();
+			}
+
+			if (dbConnection != null) {
+				dbConnection.close();
+			}
+
+		}
+		return randomNum + "";
+	}
+	
+	public int getCustomerIdFromToken(String cookieId) throws SQLException {
+		ResultSet resultSet;
+		PreparedStatement preparedStatement=null;
+		Connection connection = null;
+		int customerId = -1;
+		try {
+			connection = ConnectionManager.connect();
+			connection.setAutoCommit(false);
+			preparedStatement = connection.prepareStatement(
+					"SELECT customer_id FROM cookie WHERE cookie_id = ?");
+			preparedStatement.setString(1, cookieId);
+
+			// Retrieve the result of RETURNING statement to get the current id.
+			resultSet = preparedStatement.executeQuery();
+			customerId = resultSet.getInt(1);
+			preparedStatement.close();
+			connection.setAutoCommit(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionManager.close(connection);
+		}		
+		return customerId;		
+	}
+
+	//Inserts the cookie in the database and links it direct with the db
+	@Override
+	public boolean insertNewToken(int customerId, String token)  {
+		ResultSet resultSet = null;
+		PreparedStatement preparedStatement;
+		Connection connection = ConnectionManager.connect();
+	    try {
+				connection.setAutoCommit(false);
+				preparedStatement = connection.prepareStatement(
+						"INSERT INTO cookie (cookie_id, customer_id) "+
+								"VALUES (?, ?) " );
+				preparedStatement.setInt(1, customerId);
+				preparedStatement.setString(2, token);
+				resultSet = preparedStatement.executeQuery();
+				preparedStatement.close();
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+	    		return true;
+	}
+
+	@Override
+	public boolean updateToken(int customerId, String token) {
+		ResultSet resultSet = null;
+		PreparedStatement preparedStatement;
+		Connection connection = ConnectionManager.connect();
+	    try {
+				connection.setAutoCommit(false);
+				preparedStatement = connection.prepareStatement(
+						"UPDATE cookie SET cookie_id = ? "+
+								"WHERE customer_id = ?" );
+				preparedStatement.setInt(2, customerId);
+				preparedStatement.setString(1, token);
+				resultSet = preparedStatement.executeQuery();
+				preparedStatement.close();
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+	    		return true;
+	}
+
+}
 

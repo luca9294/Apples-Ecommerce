@@ -38,11 +38,7 @@
         <parameter qname="pns:email" xmlns:pns="http://db" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:pwd" xmlns:pns="http://db" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
       </operation>
-      <operation name="login" qname="operNS:login" xmlns:operNS="http://db" returnQName="retNS:loginReturn" xmlns:retNS="http://db" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
-        <parameter qname="pns:usr" xmlns:pns="http://db" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
-        <parameter qname="pns:pwd" xmlns:pns="http://db" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
-      </operation>
-      <parameter name="allowedMethods" value="modify find login delete"/>
+      <parameter name="allowedMethods" value="modify find delete"/>
 
       <typeMapping
         xmlns:ns="http://Serializables"

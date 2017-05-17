@@ -7,8 +7,8 @@
   <ns1:parameter name="dotNetSoapEncFix" value="true"/>
   <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
   <ns1:parameter name="sendXMLDeclaration" value="true"/>
-  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:parameter name="sendXsiTypes" value="true"/>
+  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:requestFlow>
    <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
     <ns1:parameter name="scope" value="session"/>
@@ -61,11 +61,7 @@
    <ns1:parameter qname="ns5:email" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
    <ns1:parameter qname="ns5:pwd" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
-  <ns1:operation name="login" qname="ns7:login" returnQName="ns7:loginReturn" returnType="xsd:boolean" soapAction="" xmlns:ns7="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns7:usr" type="xsd:string"/>
-   <ns1:parameter qname="ns7:pwd" type="xsd:string"/>
-  </ns1:operation>
-  <ns1:parameter name="allowedMethods" value="modify find login delete"/>
+  <ns1:parameter name="allowedMethods" value="modify find delete"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="wsdlPortType" value="Customer"/>
   <ns1:parameter name="className" value="db.Customer"/>
@@ -73,31 +69,53 @@
   <ns1:parameter name="schemaQualified" value="http://Serializables,http://db"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://db"/>
   <ns1:parameter name="wsdlServiceElement" value="CustomerService"/>
-  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns8:CustomerObject" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:Serializables.CustomerObject" xmlns:ns8="http://Serializables"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns7:CustomerObject" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:Serializables.CustomerObject" xmlns:ns7="http://Serializables"/>
  </ns1:service>
  <ns1:service name="LoginService" provider="java:RPC" style="wrapped" use="literal">
-  <ns1:operation name="getPublicKey" qname="ns9:getPublicKey" returnQName="ns9:getPublicKeyReturn" returnType="xsd:string" soapAction="" xmlns:ns9="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-  <ns1:operation name="getError" qname="ns10:getError" returnQName="ns10:getErrorReturn" returnType="xsd:string" soapAction="" xmlns:ns10="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-  <ns1:operation name="createNewUser" qname="ns11:createNewUser" returnQName="ns11:createNewUserReturn" returnType="xsd:boolean" soapAction="" xmlns:ns11="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns11:salutation" type="xsd:string"/>
-   <ns1:parameter qname="ns11:name" type="xsd:string"/>
-   <ns1:parameter qname="ns11:surename" type="xsd:string"/>
-   <ns1:parameter qname="ns11:country" type="xsd:string"/>
-   <ns1:parameter qname="ns11:province" type="xsd:string"/>
-   <ns1:parameter qname="ns11:city" type="xsd:string"/>
-   <ns1:parameter qname="ns11:street" type="xsd:string"/>
-   <ns1:parameter qname="ns11:streetNo" type="xsd:string"/>
-   <ns1:parameter qname="ns11:zip" type="xsd:string"/>
-   <ns1:parameter qname="ns11:customer_id" type="xsd:int"/>
-   <ns1:parameter qname="ns11:email" type="xsd:string"/>
-   <ns1:parameter qname="ns11:pwd" type="xsd:string"/>
+  <ns1:operation name="getPublicKey" qname="ns8:getPublicKey" returnQName="ns8:getPublicKeyReturn" returnType="xsd:string" soapAction="" xmlns:ns8="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="createNewUser" qname="ns9:createNewUser" returnQName="ns9:createNewUserReturn" returnType="xsd:boolean" soapAction="" xmlns:ns9="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns9:salutation" type="xsd:string"/>
+   <ns1:parameter qname="ns9:name" type="xsd:string"/>
+   <ns1:parameter qname="ns9:surename" type="xsd:string"/>
+   <ns1:parameter qname="ns9:country" type="xsd:string"/>
+   <ns1:parameter qname="ns9:province" type="xsd:string"/>
+   <ns1:parameter qname="ns9:city" type="xsd:string"/>
+   <ns1:parameter qname="ns9:street" type="xsd:string"/>
+   <ns1:parameter qname="ns9:streetNo" type="xsd:string"/>
+   <ns1:parameter qname="ns9:zip" type="xsd:string"/>
+   <ns1:parameter qname="ns9:customer_id" type="xsd:int"/>
+   <ns1:parameter qname="ns9:email" type="xsd:string"/>
+   <ns1:parameter qname="ns9:pwd" type="xsd:string"/>
   </ns1:operation>
-  <ns1:parameter name="allowedMethods" value="getError getPublicKey createNewUser"/>
-  <ns1:parameter name="wsdlPortType" value="LoginService"/>
+  <ns1:operation name="getCookieToken" qname="ns10:getCookieToken" returnQName="ns10:getCookieTokenReturn" returnType="xsd:string" soapAction="" xmlns:ns10="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="updateCookieToken" qname="ns11:updateCookieToken" returnQName="ns11:updateCookieTokenReturn" returnType="xsd:string" soapAction="" xmlns:ns11="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns11:customerId" type="xsd:int"/>
+  </ns1:operation>
+  <ns1:operation name="updateToken" qname="ns12:updateToken" returnQName="ns12:updateTokenReturn" returnType="xsd:boolean" soapAction="" xmlns:ns12="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns12:customerId" type="xsd:int"/>
+   <ns1:parameter qname="ns12:token" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="getCustomerIdFromToken" qname="ns13:getCustomerIdFromToken" returnQName="ns13:getCustomerIdFromTokenReturn" returnType="xsd:int" soapAction="" xmlns:ns13="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns13:cookieId" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="insertNewToken" qname="ns14:insertNewToken" returnQName="ns14:insertNewTokenReturn" returnType="xsd:boolean" soapAction="" xmlns:ns14="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns14:customerId" type="xsd:int"/>
+   <ns1:parameter qname="ns14:token" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="loginCookie" qname="ns15:loginCookie" returnQName="ns15:loginCookieReturn" returnType="xsd:int" soapAction="" xmlns:ns15="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns15:cookieId" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="login" qname="ns16:login" returnQName="ns16:loginReturn" returnType="xsd:int" soapAction="" xmlns:ns16="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns16:email" type="xsd:string"/>
+   <ns1:parameter qname="ns16:pwd" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:operation name="getError" qname="ns17:getError" returnQName="ns17:getErrorReturn" returnType="xsd:string" soapAction="" xmlns:ns17="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:parameter name="allowedMethods" value="getError getCustomerIdFromToken updateCookieToken updateToken loginCookie insertNewToken getPublicKey getCookieToken createNewUser login"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
-  <ns1:parameter name="schemaQualified" value="http://db"/>
-  <ns1:parameter name="wsdlServicePort" value="LoginService"/>
+  <ns1:parameter name="wsdlPortType" value="LoginService"/>
   <ns1:parameter name="className" value="db.LoginService"/>
+  <ns1:parameter name="wsdlServicePort" value="LoginService"/>
+  <ns1:parameter name="schemaQualified" value="http://db"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://db"/>
   <ns1:parameter name="wsdlServiceElement" value="LoginServiceService"/>
  </ns1:service>

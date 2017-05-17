@@ -106,6 +106,10 @@ public class CustomerObject implements Serializable {
 	public String getKey() {
 		return key;
 	}
+	
+	public boolean isPwdMatching(String pwd) {
+		return pwd.equals(this.pwd);
+	}
 
 	@Override
 	public String toString() {
