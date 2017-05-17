@@ -142,7 +142,7 @@ public class LoginService implements interfaces.LoginServiceInt {
 		try {
 			connection.setAutoCommit(false);
 			preparedStatement = connection.prepareStatement(
-					"SELECT * FROM cookies WHERE cookie_id = ? ");
+					"SELECT * FROM cookie WHERE cookie_id = ? ");
 			preparedStatement.setString(1, id);
 
 			// Retrieve the result of RETURNING statement to get the current id.
@@ -178,12 +178,12 @@ public class LoginService implements interfaces.LoginServiceInt {
 			// Retrieve the result of RETURNING statement to get the current id.
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {				
-				customer = new CustomerObject(resultSet.getInt(0), resultSet.getString(2),
-						resultSet.getString(3), resultSet.getString(1),
-						resultSet.getString(4), resultSet.getString(5),
-						resultSet.getString(6), resultSet.getString(7),
-						resultSet.getString(8), resultSet.getString(9),
-						resultSet.getString(11), resultSet.getString(12),resultSet.getString(9));
+				customer = new CustomerObject(resultSet.getInt(1), resultSet.getString(3),
+						resultSet.getString(4), resultSet.getString(2),
+						resultSet.getString(5), resultSet.getString(6),
+						resultSet.getString(7), resultSet.getString(8),
+						resultSet.getString(9), resultSet.getString(10),
+						resultSet.getString(12), resultSet.getString(13),resultSet.getString(10));
 				this.customer = customer;
 			}
 			else
@@ -332,6 +332,7 @@ public class LoginService implements interfaces.LoginServiceInt {
 
 			// Retrieve the result of RETURNING statement to get the current id.
 			resultSet = preparedStatement.executeQuery();
+			resultSet.next();
 			customerId = resultSet.getInt(1);
 			preparedStatement.close();
 			connection.setAutoCommit(true);

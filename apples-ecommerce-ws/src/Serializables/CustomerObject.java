@@ -12,28 +12,42 @@ import javax.xml.bind.annotation.XmlType;
 
 import connection.ConnectionManager;
 
-public class CustomerObject implements Serializable {
+@XmlRootElement(name = "CustomerObject")
+public class CustomerObject  {
 
 	private static final long serialVersionUID = -5577579081118070434L;
 
-	
+	@XmlElement(name = "customer_id")
 	private int customer_id;
+	@XmlElement(name = "salutation")
 	private String salutation;
+	@XmlElement(name = "firstname")
 	private String firstname;
+	@XmlElement(name = "lastname")
 	private String lastname;
+	@XmlElement(name = "company")
 	private String company;
+	@XmlElement(name = "country")
 	private String country;
+	@XmlElement(name = "province")
 	private String province;
+	@XmlElement(name = "city")
 	private String city;
+	@XmlElement(name = "street")
 	private String street;
+	@XmlElement(name = "streetNo")
 	private String streetNo;
+	@XmlElement(name = "zip")
 	private String zip;
+	@XmlElement(name = "email")
 	private String email;
+	@XmlElement(name = "pwd")
 	private String pwd;
+	@XmlElement(name = "key")
 	private String key;
 	
 	
-	
+
 	public CustomerObject(){}
 	
 	

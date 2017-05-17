@@ -17,6 +17,7 @@ import javax.crypto.Cipher;
 import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
+import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -26,7 +27,7 @@ import interfaces.CustomerInt;
 
 @WebService(endpointInterface = "interfaces.CustomerInt")  
 public class Customer implements CustomerInt {
-	
+	 
 	private CustomerObject currentCustomer;
 	
 	public Customer(){};
@@ -90,7 +91,7 @@ public class Customer implements CustomerInt {
 	}
 
 
-
+    @WebResult(name="CustomerObject")
     @Override 
 	public CustomerObject find(int id) {
 		CustomerObject customer = null;
