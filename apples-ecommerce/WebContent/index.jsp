@@ -46,7 +46,6 @@
     <div class="imgcontainer">
       <span onclick="document.getElementById('id05').style.display='none'" class="close" title="Close Modal">&times;</span>
     </div>
-
     <div class="container">
       <label><b><%out.print(request.getParameter("message")); %></b></label>
     </div>
@@ -56,13 +55,11 @@
   </form>
 </div>
 
-
  <c:if test="${not empty param.message}" >
 	<script>
     document.getElementById('id05').style.display='block'
 	</script>  
  </c:if>
-
  
  
 

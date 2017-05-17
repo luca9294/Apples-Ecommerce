@@ -31,40 +31,14 @@
    LoginServiceIntProxy lsi = new LoginServiceIntProxy();
    boolean ct = lsi.createNewUser(salutation, name, sname, country, province, city, street, "", zip, 0, email, pwd);
    if (ct) {
-	   
-	   String ip = request.getHeader("X-Forwarded-For");  
-       if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-           ip = request.getHeader("Proxy-Client-IP");  
-       }  
-       if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-           ip = request.getHeader("WL-Proxy-Client-IP");  
-       }  
-       if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-           ip = request.getHeader("HTTP_CLIENT_IP");  
-       }  
-       if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-           ip = request.getHeader("HTTP_X_FORWARDED_FOR");  
-       }  
-       if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {  
-           ip = request.getRemoteAddr();  
-       }
-	   
-	   CustomerIntProxy cip = new CustomerIntProxy();
-	   Cookie cEmail = new Cookie("email", email);
-	   Cookie cPwd   = new Cookie("pwd", pwd);
-	   Cookie cCountry = new Cookie("country", new GeoIPServiceSoapProxy().getGeoIP(ip).getCountryCode());
-	   Cookie cHost= new Cookie("host", request.getRemoteHost());
-	   
-	   cEmail.setMaxAge(24*60*60*15);
-	   cPwd.setMaxAge(24*60*60*15);
-	   cCountry.setMaxAge(24*60*60*15);
-	   cHost.setMaxAge(24*60*60*15);
-	   
-       response.addCookie(cEmail);
-       response.addCookie(cPwd);
-       response.addCookie(cCountry);
-       response.addCookie(cHost);
-       
+	   int id = lsi.login(email, pwd);
+       String token = lsi.getCookieToken();
+	   Cookie cToken = new Cookie("token", token);
+	   cToken.setMaxAge(60*60*30);
+	   response.addCookie(cToken);
+	   lsi.insertNewToken(id, token);
+       session.setAttribute("customer_id", id);
+       session.setAttribute("logged", true);
 	   response.sendRedirect(String.format("%s%s", request.getContextPath(), "/index.jsp?message=Registration succesfully"));
    	   		
    }

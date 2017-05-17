@@ -4,14 +4,33 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-<div id="logo"" style="width: 245px; height: 118px; "><img src="https://www.beverfood.com/wp-content/uploads/2014/10/melinda.png" style="height: 105px; width="200" height="40" "/></div>
+<div id="logo"" style="width: 245px; height: 118px; "><img src="https://preview.ibb.co/geOCLk/18555206_10155315010508236_977846558_n.png" style="height: 105px; width="200" height="40" "/></div>
+<% 
+
+Cookie[] cookies = request.getCookies();
+Cookie myCookie = null;
+if (cookies != null) {
+ for (Cookie cookie : cookies) {
+   if (cookie.getName().equals("token")) {
+      myCookie = cookie;
+    }
+  }
+}
+boolean attribute =false;
+try{
+	attribute = (boolean)session.getAttribute("logged");
+}
+catch (Exception e){
+	attribute = false;}
+
+if (!attribute && myCookie == null){ %>
 <div id="top"><ul>
   <li><a href="#home">Home</a></li>
   <li><a href="#news">News</a></li>
   <li><a href="#contact">Contact</a></li>
   <li style="float:right"><a class="active" href="#" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Login</a></li>
   <div id="id01" class="modal">
-   <form class="modal-content animate">
+   <form class="modal-content animate" action="/apples-ecommerce-0.0.1-SNAPSHOT/doLogin.jsp">
     <div class="imgcontainer">
       <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
       <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Suedtirolerapfel.svg/1200px-Suedtirolerapfel.svg.png" alt="Avatar" class="avatar">
@@ -25,7 +44,6 @@
       <input type="password" placeholder="Enter Password" name="psw" required>
         
       <button type="submit">Login</button>
-      <input type="checkbox" checked="checked"> Remember me
     </div>
 
     <div class="container" style="background-color:#f1f1f1">
@@ -78,4 +96,27 @@
 </div>
 </ul>
 </div>
+<%} 
+else if (attribute){ %>
+<div id="top"><ul>
+  <% 
+  int id = (int)session.getAttribute("customer_id");
+  CustomerObject co = new CustomerIntProxy().find(id);
+ 
+  %>
+  <li><a href="#home">Profile</a></li>
+  <li><a href="#news">Your Orders</a></li>
+  <li><a href="#contact">Your Chart</a></li>
+  <li style="float:right"><a class="active" href="#" onclick="document.getElementById('id01').style.display='block'" style="width:auto;"><b>Logged as <% out.print(id); %></b></a></li>
+  <li style="float:right"><a class="active" href="#" onclick="document.getElementById('id01').style.display='block'" style="width:auto;">Logout</a></li>
+</ul>
+</div>
+<%} 
+else{
+	%> 
+	 response.sendRedirect(String.format("%s%s", request.getContextPath(), "/doLoginCookie.jsp?token="<%out.println(myCookie.getValue()); %>));
+	<%	
+}
+	
+%>
 <div class="clear"></div>

@@ -50,10 +50,22 @@ public class LoginServiceIntProxy implements interfaces.LoginServiceInt {
     return loginServiceInt.createNewUser(arg0, arg1, arg2, arg3, arg4, arg5, arg6, arg7, arg8, arg9, arg10, arg11);
   }
   
-  public boolean login(java.lang.String arg0, java.lang.String arg1) throws java.rmi.RemoteException{
+  public int login(java.lang.String arg0, java.lang.String arg1) throws java.rmi.RemoteException{
     if (loginServiceInt == null)
       _initLoginServiceIntProxy();
     return loginServiceInt.login(arg0, arg1);
+  }
+  
+  public boolean insertNewToken(int arg0, java.lang.String arg1) throws java.rmi.RemoteException{
+    if (loginServiceInt == null)
+      _initLoginServiceIntProxy();
+    return loginServiceInt.insertNewToken(arg0, arg1);
+  }
+  
+  public java.lang.String getCookieToken() throws java.rmi.RemoteException, interfaces.SQLException{
+    if (loginServiceInt == null)
+      _initLoginServiceIntProxy();
+    return loginServiceInt.getCookieToken();
   }
   
   public java.lang.String getPublicKey() throws java.rmi.RemoteException{
@@ -62,10 +74,34 @@ public class LoginServiceIntProxy implements interfaces.LoginServiceInt {
     return loginServiceInt.getPublicKey();
   }
   
+  public int loginCookie(java.lang.String arg0) throws java.rmi.RemoteException{
+    if (loginServiceInt == null)
+      _initLoginServiceIntProxy();
+    return loginServiceInt.loginCookie(arg0);
+  }
+  
+  public boolean updateToken(int arg0, java.lang.String arg1) throws java.rmi.RemoteException{
+    if (loginServiceInt == null)
+      _initLoginServiceIntProxy();
+    return loginServiceInt.updateToken(arg0, arg1);
+  }
+  
+  public java.lang.String updateCookieToken(int arg0) throws java.rmi.RemoteException, interfaces.SQLException{
+    if (loginServiceInt == null)
+      _initLoginServiceIntProxy();
+    return loginServiceInt.updateCookieToken(arg0);
+  }
+  
   public java.lang.String getError() throws java.rmi.RemoteException{
     if (loginServiceInt == null)
       _initLoginServiceIntProxy();
     return loginServiceInt.getError();
+  }
+  
+  public int getCustomerIdFromToken(java.lang.String arg0) throws java.rmi.RemoteException, interfaces.SQLException{
+    if (loginServiceInt == null)
+      _initLoginServiceIntProxy();
+    return loginServiceInt.getCustomerIdFromToken(arg0);
   }
   
   

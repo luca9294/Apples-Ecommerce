@@ -22,7 +22,7 @@ public class CustomerServiceLocator extends org.apache.axis.client.Service imple
     }
 
     // Use to get a proxy class for CustomerPort
-    private java.lang.String CustomerPort_address = "http://54.202.224.165:8080/apples-ecommerce-ws/Customer";
+    private java.lang.String CustomerPort_address = "http://localhost:8080/apples-ecommerce-ws/Customer";
 
     public java.lang.String getCustomerPortAddress() {
         return CustomerPort_address;
