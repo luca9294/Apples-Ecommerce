@@ -2,6 +2,7 @@ package db;
 
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,21 +22,24 @@ import connection.ConnectionManager;
 public class LoginService implements interfaces.LoginServiceInt {
 	private String errorString;
 	private CustomerObject customer = null;
+	private String[] keys;
 
-	@Override
-	public String getPublicKey() {		
-		String publicKey = "";
-		try{
-			KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
-			KeyPair pair = keyGen.generateKeyPair();
-			PublicKey pub = pair.getPublic();
-			byte[] b = pub.getEncoded();
-			publicKey = Base64.encode(b);
+
+private void getKeys() {		
+	keys = new String[2];
+	try{
+		KeyPairGenerator keyGen = KeyPairGenerator.getInstance("RSA");
+		KeyPair pair = keyGen.generateKeyPair();
+		PublicKey pub = pair.getPublic();
+		PrivateKey pri = pair.getPrivate();
+		byte[] bPub = pub.getEncoded();
+		byte[] bPri = pri.getEncoded();
+		keys[0] = Base64.encode(bPub);
+		keys[1] = Base64.encode(bPri);
 		}
 		catch (NoSuchAlgorithmException e){
 			e.printStackTrace();	
 		}
-		return publicKey;
 	}
 
 	@Override
@@ -50,40 +54,7 @@ public class LoginService implements interfaces.LoginServiceInt {
 			errorString = "There is already an user with that email!";
 			return false;
 		}	
-		LoginService ls = new LoginService();
-		String pub = ls.getPublicKey();
-		byte[] publicBytes = Base64.decode(pub);
-		X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicBytes);
-		KeyFactory keyFactory;
-		try {
-			keyFactory = KeyFactory.getInstance("RSA");
-			PublicKey pubKey = keyFactory.generatePublic(keySpec);
-			Cipher cipher = Cipher.getInstance("RSA");   
-			cipher.init(Cipher.ENCRYPT_MODE, pubKey);  
-			byte[] byteArray = cipher.doFinal(pwd.getBytes());
-			pwd = Base64.encode(byteArray);
 
-		} catch (NoSuchAlgorithmException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (InvalidKeySpecException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (NoSuchPaddingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InvalidKeyException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalBlockSizeException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (BadPaddingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		CustomerObject customer = null;
 		ResultSet resultSet;
 		PreparedStatement preparedStatement;
 		Connection connection = ConnectionManager.connect();
@@ -106,13 +77,13 @@ public class LoginService implements interfaces.LoginServiceInt {
 			preparedStatement.setString(9, zip);
 			preparedStatement.setString(10, email);
 			preparedStatement.setString(11, pwd);
-			preparedStatement.setString(12, pub);
+			preparedStatement.setString(12, keys[1]);
 			// Retrieve the result of RETURNING statement to get the current id.
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {				
 				customer = new CustomerObject(resultSet.getInt(1), salutation,
 						name, surename, country, province, city,
-						street, streetNo, zip,email,pwd, pub);
+						street, streetNo, zip,email,pwd, keys[1]);
 				connection.commit();					
 			}
 			else {
@@ -212,26 +183,36 @@ public class LoginService implements interfaces.LoginServiceInt {
 			return -1;
 		else 
 		{
-			if (customer.isPwdMatching(getEncryptedString(customer.getKey(),pwd)))
-				return customer.getId();
-			else
-				return 0;
+		   String painPwd = getDecryptedString(customer.getKey(), customer.getPwd());
+		   insertNewKey(customer.getId(),keys[1]);
+		   String insPwd = getDecryptedString(customer.getKey(), pwd);
+		   if (insPwd.equals(painPwd)){
+			   insertNewPwd(customer.getId(),pwd);
+			   return customer.getId();
+		   }
+		   
+		   else{
+			   customer = null;
+			   return 0;
+		   }
+		   
+		   
 		}
 	}
 
 	//Get encrypted pwd using the public key given
-	private String getEncryptedString(String publickey, String inputString){
-		String encryptedStr = ""; 
-		byte[] b = Base64.decode(publickey); 
-		X509EncodedKeySpec keySpec = new X509EncodedKeySpec(b);
+	private String getDecryptedString(String privateKey, String inputString){
+		String dencryptedStr = ""; 
+		byte[] bPri   = Base64.decode(privateKey); 
+		PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(bPri);
 		KeyFactory keyFactory;
 		try {
 			keyFactory = KeyFactory.getInstance("RSA");
-			PublicKey pubKey = keyFactory.generatePublic(keySpec);
+			PrivateKey priKey = keyFactory.generatePrivate((keySpec));
 			Cipher cipher = Cipher.getInstance("RSA"); 
-			cipher.init(Cipher.ENCRYPT_MODE, pubKey);
+			cipher.init(Cipher.DECRYPT_MODE, priKey);
 			byte[] byteArray = cipher.doFinal(inputString.getBytes());
-			encryptedStr = Base64.encode(byteArray);
+			dencryptedStr = Base64.encode(byteArray);
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -251,7 +232,7 @@ public class LoginService implements interfaces.LoginServiceInt {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return encryptedStr;
+		return dencryptedStr;
 	}
 
 	//It returns a new token
@@ -367,7 +348,57 @@ public class LoginService implements interfaces.LoginServiceInt {
 			}
 	    		return true;
 	}
-
+	
+	
+	
+	private boolean insertNewKey(int customerId, String privateKey)  {
+		ResultSet resultSet = null;
+		PreparedStatement preparedStatement;
+		Connection connection = ConnectionManager.connect();
+	    try {
+				connection.setAutoCommit(false);
+				preparedStatement = connection.prepareStatement(
+						"UPDATE customer "
+						+ "SET key = ?"
+						+ "WHERE customer_id=?");
+				preparedStatement.setString(1, privateKey);
+				preparedStatement.setInt(2, customerId);
+				resultSet = preparedStatement.executeQuery();
+				preparedStatement.close();
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+	    		return true;
+	}
+	
+	
+	private boolean insertNewPwd(int customerId, String pwd)  {
+		ResultSet resultSet = null;
+		PreparedStatement preparedStatement;
+		Connection connection = ConnectionManager.connect();
+	    try {
+				connection.setAutoCommit(false);
+				preparedStatement = connection.prepareStatement(
+						"UPDATE customer "
+						+ "SET pwd = ?"
+						+ "WHERE customer_id=?");
+				preparedStatement.setString(1, pwd);
+				preparedStatement.setInt(2, customerId);
+				resultSet = preparedStatement.executeQuery();
+				preparedStatement.close();
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+	    		return true;
+	}
+	
+	
 	@Override
 	public boolean updateToken(int customerId, String token) {
 		ResultSet resultSet = null;
@@ -389,6 +420,12 @@ public class LoginService implements interfaces.LoginServiceInt {
 				return false;
 			}
 	    		return true;
+	}
+
+	@Override
+	public String getPublicKey() {
+		getKeys();
+		return keys[0];
 	}
 
 }

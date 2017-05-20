@@ -108,6 +108,10 @@ public class CustomerObject  {
 	public String getStreet() {
 		return street;
 	}
+	
+	public String getPwd() {
+		return pwd;
+	}
 
 	public String getStreetNo() {
 		return streetNo;
