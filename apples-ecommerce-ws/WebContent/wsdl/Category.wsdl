@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions targetNamespace="http://db" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://db" xmlns:intf="http://db" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<wsdl:definitions targetNamespace="http://db" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://db" xmlns:intf="http://db" xmlns:tns1="http://Serializables" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
 <!--WSDL created by Apache Axis version: 1.4
 Built on Apr 22, 2006 (06:55:48 PDT)-->
  <wsdl:types>
   <schema elementFormDefault="qualified" targetNamespace="http://db" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://Serializables"/>
+   <element name="getProducts">
+    <complexType>
+     <sequence>
+      <element name="cat_id" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getProductsResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getProductsReturn" type="tns1:ProductObject"/>
+     </sequence>
+    </complexType>
+   </element>
    <element name="getCategories">
     <complexType/>
    </element>
@@ -15,7 +30,29 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
     </complexType>
    </element>
   </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://Serializables" xmlns="http://www.w3.org/2001/XMLSchema">
+   <complexType name="ProductObject">
+    <sequence>
+     <element name="category_id" type="xsd:int"/>
+     <element name="description" nillable="true" type="xsd:string"/>
+     <element name="imgLink" nillable="true" type="xsd:string"/>
+     <element name="price" type="xsd:int"/>
+     <element name="price_type" type="xsd:int"/>
+     <element name="product_id" type="xsd:int"/>
+     <element name="summary" nillable="true" type="xsd:string"/>
+     <element name="title" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
  </wsdl:types>
+
+   <wsdl:message name="getProductsResponse">
+
+      <wsdl:part element="impl:getProductsResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
 
    <wsdl:message name="getCategoriesResponse">
 
@@ -33,7 +70,27 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="getProductsRequest">
+
+      <wsdl:part element="impl:getProducts" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:portType name="Category">
+
+      <wsdl:operation name="getProducts">
+
+         <wsdl:input message="impl:getProductsRequest" name="getProductsRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getProductsResponse" name="getProductsResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
 
       <wsdl:operation name="getCategories">
 
@@ -52,6 +109,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:binding name="CategorySoapBinding" type="impl:Category">
 
       <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getProducts">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getProductsRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getProductsResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
 
       <wsdl:operation name="getCategories">
 

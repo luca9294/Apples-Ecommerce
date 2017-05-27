@@ -15,14 +15,25 @@
   <service name="Category" provider="java:RPC" style="wrapped" use="literal">
       <parameter name="wsdlTargetNamespace" value="http://db"/>
       <parameter name="wsdlServiceElement" value="CategoryService"/>
-      <parameter name="schemaQualified" value="http://db"/>
+      <parameter name="schemaQualified" value="http://Serializables,http://db"/>
       <parameter name="wsdlServicePort" value="Category"/>
       <parameter name="className" value="db.CategorySoapBindingImpl"/>
       <parameter name="wsdlPortType" value="Category"/>
       <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="getProducts" qname="operNS:getProducts" xmlns:operNS="http://db" returnQName="retNS:getProductsReturn" xmlns:retNS="http://db" returnType="rtns:ProductObject" xmlns:rtns="http://Serializables" soapAction="" >
+        <parameter qname="pns:cat_id" xmlns:pns="http://db" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
       <operation name="getCategories" qname="operNS:getCategories" xmlns:operNS="http://db" returnQName="retNS:getCategoriesReturn" xmlns:retNS="http://db" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
       </operation>
-      <parameter name="allowedMethods" value="getCategories"/>
+      <parameter name="allowedMethods" value="getCategories getProducts"/>
 
+      <typeMapping
+        xmlns:ns="http://Serializables"
+        qname="ns:ProductObject"
+        type="java:Serializables.ProductObject"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
   </service>
 </deployment>

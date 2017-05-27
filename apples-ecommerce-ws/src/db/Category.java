@@ -9,6 +9,7 @@ import java.util.Vector;
 
 import javax.jws.WebService;
 
+import Serializables.ProductObject;
 import connection.ConnectionManager;
 import interfaces.CategoryInt;
 
@@ -40,4 +41,39 @@ public class Category implements CategoryInt {
 			return categories;
 		
 }
+
+	@Override
+	public ProductObject[] getProducts(int cat_id) {
+		LinkedList<ProductObject> list = new LinkedList<ProductObject>();
+		ResultSet resultSet;
+		PreparedStatement preparedStatement;
+		Connection connection = ConnectionManager.connect();
+		try {
+			connection.setAutoCommit(false);
+			preparedStatement = connection.prepareStatement(
+					"SELECT * FROM products WHERE  category_id= ? ");
+			preparedStatement.setInt(1, cat_id);
+
+			// Retrieve the result of RETURNING statement to get the current id.
+			resultSet = preparedStatement.executeQuery();
+			while (resultSet.next()) {				
+				ProductObject po = new ProductObject(resultSet.getInt("product_id"), cat_id, 
+						resultSet.getString("title"), resultSet.getString("summary"), 
+						resultSet.getString("description"), resultSet.getInt("price"), resultSet.getInt("price_type"), resultSet.getString("image_link"));
+				list.add(po);
+			
+			}
+			preparedStatement.close();
+			connection.setAutoCommit(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionManager.close(connection);
+		}
+		ProductObject[] array = new ProductObject[list.size()];
+		for (int i = 0; i < list.size(); i++)
+			array[i] = list.get(i);
+		
+		return array;
+	}
 }

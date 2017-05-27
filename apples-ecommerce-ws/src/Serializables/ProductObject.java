@@ -2,20 +2,37 @@ package Serializables;
 
 import java.io.Serializable;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
+
+@XmlRootElement(name = "ProductObject")
 public class ProductObject implements Serializable {
 	
+	@XmlElement(name = "product_id")
 	private int product_id;
+	@XmlElement(name = "category_id")
 	private int category_id;
+	@XmlElement(name = "title")
     private String title; 
+	@XmlElement(name = "summary")
     private String summary;
+	@XmlElement(name = "description")
     private String description;
+	@XmlElement(name = "price")
     private int price;
+	@XmlElement(name = "price_type")
     private int price_type;
+	@XmlElement(name = "imgLink")
+    private String imgLink;
+    
+    
+    public ProductObject(){}
+    
     
     
 	public ProductObject(int product_id, int category_id, String title,
 			String summary, String description, int price,
-			int price_type) {
+			int price_type, String imgLink ) {
 		this.product_id = product_id;
 		this.category_id = category_id;
 		this.title = title;
@@ -23,6 +40,7 @@ public class ProductObject implements Serializable {
 		this.description = description;
 		this.price = price;
 		this.price_type = price_type;
+		this.imgLink = imgLink;
 	}
 	
 	
@@ -56,14 +74,11 @@ public class ProductObject implements Serializable {
 	}
 	
 
-	public int price_type() {
+	public int getPrice_type() {
 		return price_type;
 	}
-
-    
 	
-	
-	
-	
-	
+	public String getImgLink(){
+		return imgLink;
+	}
 }
