@@ -10,8 +10,6 @@ import Serializables.CustomerObject;
 @WebService
 public interface LoginServiceInt {
 	@WebMethod
-	public String getPublicKey();
-	@WebMethod
 	public boolean createNewUser(String salutation, String name,
 			String surename, String country, String province,
 			String city, String street,	String streetNo, String zip, int customer_id,
@@ -33,6 +31,11 @@ public interface LoginServiceInt {
 	public boolean insertNewToken(int customerId, String token);
 	@WebMethod 
 	public boolean updateToken(int customerId, String token);
+	@WebMethod
+	public String getPublicKey();
+	@WebMethod
+	public String getPublicKeyFromId(String email);
+	
 	
 
 

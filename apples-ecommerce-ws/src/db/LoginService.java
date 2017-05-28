@@ -1,5 +1,6 @@
 package db;
 
+import java.rmi.RemoteException;
 import java.security.*;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
@@ -16,6 +17,7 @@ import javax.jws.WebService;
 import org.apache.axis.encoding.Base64;
 import Serializables.CustomerObject;
 import connection.ConnectionManager;
+import helper.KeysManagerProxy;
 
 
 @WebService(endpointInterface = "interfaces.LoginServiceInt") 
@@ -77,13 +79,13 @@ private void getKeys() {
 			preparedStatement.setString(9, zip);
 			preparedStatement.setString(10, email);
 			preparedStatement.setString(11, pwd);
-			preparedStatement.setString(12, keys[1]);
+			preparedStatement.setString(12, keys[0]);
 			// Retrieve the result of RETURNING statement to get the current id.
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {				
 				customer = new CustomerObject(resultSet.getInt(1), salutation,
 						name, surename, country, province, city,
-						street, streetNo, zip,email,pwd, keys[1]);
+						street, streetNo, zip,email,pwd, keys[0]);
 				connection.commit();					
 			}
 			else {
@@ -98,8 +100,16 @@ private void getKeys() {
 			ConnectionManager.close(connection);
 		}
 
-		if (customer != null)
+		if (customer != null){
+			KeysManagerProxy kmp = new KeysManagerProxy();
+			try {
+				kmp.insertNewKey(customer.getId() + "", keys[1]);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return true;
+		}
 		else
 			return false;
 	}
@@ -426,6 +436,33 @@ private void getKeys() {
 	public String getPublicKey() {
 		getKeys();
 		return keys[0];
+	}
+
+	@Override
+	public String getPublicKeyFromId(String email) {
+		ResultSet resultSet;
+		String pKey = "";
+		PreparedStatement preparedStatement=null;
+		Connection connection = null;
+		try {
+			connection = ConnectionManager.connect();
+			connection.setAutoCommit(false);
+			preparedStatement = connection.prepareStatement(
+					"SELECT * FROM customer WHERE email = ?");
+			preparedStatement.setString(1, email);
+
+			// Retrieve the result of RETURNING statement to get the current id.
+			resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			pKey = resultSet.getString("key");
+			preparedStatement.close();
+			connection.setAutoCommit(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionManager.close(connection);
+		}		
+		return pKey;		
 	}
 
 }
