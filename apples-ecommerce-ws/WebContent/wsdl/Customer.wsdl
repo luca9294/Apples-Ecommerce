@@ -65,6 +65,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <element name="key" nillable="true" type="xsd:string"/>
      <element name="lastname" nillable="true" type="xsd:string"/>
      <element name="province" nillable="true" type="xsd:string"/>
+     <element name="pwd" nillable="true" type="xsd:string"/>
      <element name="salutation" nillable="true" type="xsd:string"/>
      <element name="street" nillable="true" type="xsd:string"/>
      <element name="streetNo" nillable="true" type="xsd:string"/>

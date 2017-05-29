@@ -34,7 +34,7 @@ public interface LoginServiceInt {
 	@WebMethod
 	public String getPublicKey();
 	@WebMethod
-	public String getPublicKeyFromId(String email);
+	public String getPublicKeyFromEmail(String email);
 	
 	
 

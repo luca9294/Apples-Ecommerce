@@ -193,11 +193,29 @@ private void getKeys() {
 			return -1;
 		else 
 		{
-		   String painPwd = getDecryptedString(customer.getKey(), customer.getPwd());
-		   insertNewKey(customer.getId(),keys[1]);
-		   String insPwd = getDecryptedString(customer.getKey(), pwd);
+		   String pk = "";
+		   helper.KeysManagerProxy kmp = new helper.KeysManagerProxy();
+		   try {
+			pk = kmp.getPrivatekey(customer.getId() + "");
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		   
+		   String painPwd = getDecryptedString(pk, customer.getPwd());
+		   String insPwd = getDecryptedString(pk, pwd);
 		   if (insPwd.equals(painPwd)){
-			   insertNewPwd(customer.getId(),pwd);
+			   getKeys();
+			   this.insertNewKey(customer.getId(), keys[0]);
+			   String newPwd = getEncryptedString(painPwd, keys[0]);
+			   this.insertNewPwd(customer.getId(), newPwd);
+			   try {
+				kmp.updatePrivateKey(customer.getId() + "", keys[1]);
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			   keys = null;
 			   return customer.getId();
 		   }
 		   
@@ -221,7 +239,7 @@ private void getKeys() {
 			PrivateKey priKey = keyFactory.generatePrivate((keySpec));
 			Cipher cipher = Cipher.getInstance("RSA"); 
 			cipher.init(Cipher.DECRYPT_MODE, priKey);
-			byte[] byteArray = cipher.doFinal(inputString.getBytes());
+			byte[] byteArray = cipher.doFinal(Base64.decode(inputString));
 			dencryptedStr = Base64.encode(byteArray);
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
@@ -244,6 +262,43 @@ private void getKeys() {
 		}
 		return dencryptedStr;
 	}
+	
+	
+	
+	public String getEncryptedString(String toEncrpy, String pbKey){
+		String result = "";
+		byte[] byteKey = Base64.decode(pbKey);
+	    X509EncodedKeySpec X509publicKey = new X509EncodedKeySpec(byteKey);
+	    try {
+			KeyFactory kf = KeyFactory.getInstance("RSA");
+			PublicKey pKey = kf.generatePublic(X509publicKey);
+		    Cipher cipher = Cipher.getInstance("RSA");   
+		    cipher.init(Cipher.ENCRYPT_MODE, pKey);  
+		    result =  Base64.encode(cipher.doFinal(toEncrpy.getBytes()));
+			
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidKeySpecException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IllegalBlockSizeException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (BadPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvalidKeyException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (NoSuchPaddingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	    	return result;
+	}
+	
+	
 
 	//It returns a new token
 	@Override
@@ -361,8 +416,7 @@ private void getKeys() {
 	
 	
 	
-	private boolean insertNewKey(int customerId, String privateKey)  {
-		ResultSet resultSet = null;
+	private boolean insertNewKey(int customerId, String publicKey)  {
 		PreparedStatement preparedStatement;
 		Connection connection = ConnectionManager.connect();
 	    try {
@@ -371,9 +425,9 @@ private void getKeys() {
 						"UPDATE customer "
 						+ "SET key = ?"
 						+ "WHERE customer_id=?");
-				preparedStatement.setString(1, privateKey);
+				preparedStatement.setString(1, publicKey);
 				preparedStatement.setInt(2, customerId);
-				resultSet = preparedStatement.executeQuery();
+				preparedStatement.executeUpdate();
 				preparedStatement.close();
 				connection.setAutoCommit(true);
 			} catch (SQLException e) {
@@ -439,7 +493,7 @@ private void getKeys() {
 	}
 
 	@Override
-	public String getPublicKeyFromId(String email) {
+	public String getPublicKeyFromEmail(String email) {
 		ResultSet resultSet;
 		String pKey = "";
 		PreparedStatement preparedStatement=null;
