@@ -104,12 +104,12 @@ public class Customer implements CustomerInt {
 			preparedStatement.setInt(1, id);
 			resultSet = preparedStatement.executeQuery();
 			if(resultSet.next()) {
-				customer = new CustomerObject(id, resultSet.getString(2),
-						resultSet.getString(3), resultSet.getString(1),
-						resultSet.getString(4), resultSet.getString(5),
-						resultSet.getString(6), resultSet.getString(7),
-						resultSet.getString(8), resultSet.getString(9),
-						resultSet.getString(11), resultSet.getString(12),resultSet.getString(10));
+				customer = new CustomerObject(id, resultSet.getString("salutation"),
+						resultSet.getString("firstname"), resultSet.getString("lastname"),
+						resultSet.getString("country"), resultSet.getString("province"),
+						resultSet.getString("city"), resultSet.getString("street"),
+						resultSet.getString("street"), resultSet.getString("zip"),
+						resultSet.getString("email"), resultSet.getString("pwd"),resultSet.getString("key"));
 			}
 			preparedStatement.close();
 		} catch (SQLException e) {

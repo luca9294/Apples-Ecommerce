@@ -50,15 +50,11 @@ private void getKeys() {
 			String city, String street,	String streetNo, String zip, int customer_id,
 			String email, String pwd
 			) {
-	
-		
 		getCustomerByMail(email);
-
 		if (customer != null){
 			errorString = "There is already an user with that email! " + customer.getId();
 			return false;
 		}	
-
 		ResultSet resultSet;
 		PreparedStatement preparedStatement;
 		Connection connection = ConnectionManager.connect();
@@ -148,7 +144,6 @@ private void getKeys() {
 
 	//Check whether an user with that same email exists
 	private  void getCustomerByMail (String email) {
-		CustomerObject customer;
 		ResultSet resultSet;
 		PreparedStatement preparedStatement;
 		Connection connection = ConnectionManager.connect();
@@ -167,10 +162,9 @@ private void getKeys() {
 						resultSet.getString(7), resultSet.getString(8),
 						resultSet.getString(9), resultSet.getString(10),
 						resultSet.getString(12), resultSet.getString(13),resultSet.getString(10));
-				this.customer = customer;
 			}
 			else
-				this.customer = null;
+				customer = null;
 
 			preparedStatement.close();
 			connection.setAutoCommit(true);
@@ -208,9 +202,9 @@ private void getKeys() {
 		   String insPwd = getDecryptedString(pk, pwd);
 		   if (insPwd.equals(painPwd)){
 			   getKeys();
-			   this.insertNewKey(customer.getId(), keys[0]);
+			   insertNewKey(customer.getId(), keys[0]);
 			   String newPwd = getEncryptedString(painPwd, keys[0]);
-			   this.insertNewPwd(customer.getId(), newPwd);
+			   insertNewPwd(customer.getId(), newPwd);
 			   try {
 				kmp.updatePrivateKey(customer.getId() + "", keys[1]);
 			} catch (RemoteException e) {
@@ -276,7 +270,7 @@ private void getKeys() {
 			PublicKey pKey = kf.generatePublic(X509publicKey);
 		    Cipher cipher = Cipher.getInstance("RSA");   
 		    cipher.init(Cipher.ENCRYPT_MODE, pKey);  
-		    result =  Base64.encode(cipher.doFinal(toEncrpy.getBytes()));
+		    result =  Base64.encode(cipher.doFinal(Base64.decode(toEncrpy)));
 			
 		} catch (NoSuchAlgorithmException e) {
 			// TODO Auto-generated catch block
@@ -395,7 +389,6 @@ private void getKeys() {
 	//Inserts the cookie in the database and links it direct with the db
 	@Override
 	public boolean insertNewToken(int customerId, String token)  {
-		ResultSet resultSet = null;
 		PreparedStatement preparedStatement;
 		Connection connection = ConnectionManager.connect();
 	    try {
@@ -405,7 +398,7 @@ private void getKeys() {
 								"VALUES (?, ?) " );
 				preparedStatement.setInt(1, customerId);
 				preparedStatement.setString(2, token);
-				resultSet = preparedStatement.executeQuery();
+				preparedStatement.executeUpdate();
 				preparedStatement.close();
 				connection.setAutoCommit(true);
 			} catch (SQLException e) {
@@ -442,7 +435,6 @@ private void getKeys() {
 	
 	
 	private boolean insertNewPwd(int customerId, String pwd)  {
-		ResultSet resultSet = null;
 		PreparedStatement preparedStatement;
 		Connection connection = ConnectionManager.connect();
 	    try {
@@ -453,7 +445,7 @@ private void getKeys() {
 						+ "WHERE customer_id=?");
 				preparedStatement.setString(1, pwd);
 				preparedStatement.setInt(2, customerId);
-				resultSet = preparedStatement.executeQuery();
+				preparedStatement.executeUpdate();
 				preparedStatement.close();
 				connection.setAutoCommit(true);
 			} catch (SQLException e) {
@@ -467,7 +459,6 @@ private void getKeys() {
 	
 	@Override
 	public boolean updateToken(int customerId, String token) {
-		ResultSet resultSet = null;
 		PreparedStatement preparedStatement;
 		Connection connection = ConnectionManager.connect();
 	    try {
@@ -477,7 +468,7 @@ private void getKeys() {
 								"WHERE customer_id = ?" );
 				preparedStatement.setInt(2, customerId);
 				preparedStatement.setString(1, token);
-				resultSet = preparedStatement.executeQuery();
+				preparedStatement.executeUpdate();
 				preparedStatement.close();
 				connection.setAutoCommit(true);
 			} catch (SQLException e) {
@@ -515,6 +506,7 @@ private void getKeys() {
 			connection.setAutoCommit(true);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return "";
 		} finally {
 			ConnectionManager.close(connection);
 		}		
