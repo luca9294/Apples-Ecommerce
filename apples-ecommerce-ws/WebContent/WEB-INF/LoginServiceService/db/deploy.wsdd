@@ -12,26 +12,37 @@
       <parameter name="typeMappingVersion" value="1.2"/>
       <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getPublicKey" qname="operNS:getPublicKey" returnQName="retNS:getPublicKeyReturn" returnType="rtns:string" soapAction="">
       </operation>
-      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getError" qname="operNS:getError" returnQName="retNS:getErrorReturn" returnType="rtns:string" soapAction="">
-      </operation>
       <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="login" qname="operNS:login" returnQName="retNS:loginReturn" returnType="rtns:int" soapAction="">
         <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:email" type="tns:string"/>
         <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:pwd" type="tns:string"/>
       </operation>
-      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateCookieToken" qname="operNS:updateCookieToken" returnQName="retNS:updateCookieTokenReturn" returnType="rtns:string" soapAction="">
-        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:customerId" type="tns:int"/>
-      </operation>
-      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="loginCookie" qname="operNS:loginCookie" returnQName="retNS:loginCookieReturn" returnType="rtns:int" soapAction="">
-        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:cookieId" type="tns:string"/>
+      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getError" qname="operNS:getError" returnQName="retNS:getErrorReturn" returnType="rtns:string" soapAction="">
       </operation>
       <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getEncryptedString" qname="operNS:getEncryptedString" returnQName="retNS:getEncryptedStringReturn" returnType="rtns:string" soapAction="">
         <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:toEncrpy" type="tns:string"/>
         <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:pbKey" type="tns:string"/>
       </operation>
+      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getCookieToken" qname="operNS:getCookieToken" returnQName="retNS:getCookieTokenReturn" returnType="rtns:string" soapAction="">
+      </operation>
+      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="loginCookie" qname="operNS:loginCookie" returnQName="retNS:loginCookieReturn" returnType="rtns:int" soapAction="">
+        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:cookieId" type="tns:string"/>
+      </operation>
       <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getCustomerIdFromToken" qname="operNS:getCustomerIdFromToken" returnQName="retNS:getCustomerIdFromTokenReturn" returnType="rtns:int" soapAction="">
         <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:cookieId" type="tns:string"/>
       </operation>
-      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getCookieToken" qname="operNS:getCookieToken" returnQName="retNS:getCookieTokenReturn" returnType="rtns:string" soapAction="">
+      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateCookieToken" qname="operNS:updateCookieToken" returnQName="retNS:updateCookieTokenReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:customerId" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateToken" qname="operNS:updateToken" returnQName="retNS:updateTokenReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:customerId" type="tns:int"/>
+        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:token" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="insertNewToken" qname="operNS:insertNewToken" returnQName="retNS:insertNewTokenReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:customerId" type="tns:int"/>
+        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:token" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getPublicKeyFromEmail" qname="operNS:getPublicKeyFromEmail" returnQName="retNS:getPublicKeyFromEmailReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:email" type="tns:string"/>
       </operation>
       <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="createNewUser" qname="operNS:createNewUser" returnQName="retNS:createNewUserReturn" returnType="rtns:boolean" soapAction="">
         <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:salutation" type="tns:string"/>
@@ -47,18 +58,7 @@
         <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:email" type="tns:string"/>
         <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:pwd" type="tns:string"/>
       </operation>
-      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateToken" qname="operNS:updateToken" returnQName="retNS:updateTokenReturn" returnType="rtns:boolean" soapAction="">
-        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:customerId" type="tns:int"/>
-        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:token" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getPublicKeyFromEmail" qname="operNS:getPublicKeyFromEmail" returnQName="retNS:getPublicKeyFromEmailReturn" returnType="rtns:string" soapAction="">
-        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:email" type="tns:string"/>
-      </operation>
-      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="insertNewToken" qname="operNS:insertNewToken" returnQName="retNS:insertNewTokenReturn" returnType="rtns:boolean" soapAction="">
-        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:customerId" type="tns:int"/>
-        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:token" type="tns:string"/>
-      </operation>
-      <parameter name="allowedMethods" value="getError getCustomerIdFromToken updateCookieToken loginCookie updateToken getPublicKeyFromEmail insertNewToken getPublicKey getCookieToken login createNewUser getEncryptedString"/>
+      <parameter name="allowedMethods" value="getError getCustomerIdFromToken updateCookieToken loginCookie updateToken insertNewToken getPublicKeyFromEmail getPublicKey getCookieToken login createNewUser getEncryptedString"/>
 
   </service>
 </deployment>

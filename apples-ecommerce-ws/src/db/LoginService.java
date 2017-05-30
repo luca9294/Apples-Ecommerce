@@ -50,10 +50,12 @@ private void getKeys() {
 			String city, String street,	String streetNo, String zip, int customer_id,
 			String email, String pwd
 			) {
+	
+		
 		getCustomerByMail(email);
 
 		if (customer != null){
-			errorString = "There is already an user with that email!";
+			errorString = "There is already an user with that email! " + customer.getId();
 			return false;
 		}	
 
@@ -168,7 +170,7 @@ private void getKeys() {
 				this.customer = customer;
 			}
 			else
-				customer = null;
+				this.customer = null;
 
 			preparedStatement.close();
 			connection.setAutoCommit(true);

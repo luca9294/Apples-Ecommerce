@@ -14,16 +14,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="getError">
-    <complexType/>
-   </element>
-   <element name="getErrorResponse">
-    <complexType>
-     <sequence>
-      <element name="getErrorReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
    <element name="login">
     <complexType>
      <sequence>
@@ -39,31 +29,13 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="updateCookieToken">
-    <complexType>
-     <sequence>
-      <element name="customerId" type="xsd:int"/>
-     </sequence>
-    </complexType>
+   <element name="getError">
+    <complexType/>
    </element>
-   <element name="updateCookieTokenResponse">
+   <element name="getErrorResponse">
     <complexType>
      <sequence>
-      <element name="updateCookieTokenReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="loginCookie">
-    <complexType>
-     <sequence>
-      <element name="cookieId" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="loginCookieResponse">
-    <complexType>
-     <sequence>
-      <element name="loginCookieReturn" type="xsd:int"/>
+      <element name="getErrorReturn" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
@@ -82,6 +54,30 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
+   <element name="getCookieToken">
+    <complexType/>
+   </element>
+   <element name="getCookieTokenResponse">
+    <complexType>
+     <sequence>
+      <element name="getCookieTokenReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="loginCookie">
+    <complexType>
+     <sequence>
+      <element name="cookieId" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="loginCookieResponse">
+    <complexType>
+     <sequence>
+      <element name="loginCookieReturn" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
    <element name="getCustomerIdFromToken">
     <complexType>
      <sequence>
@@ -96,13 +92,61 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="getCookieToken">
-    <complexType/>
-   </element>
-   <element name="getCookieTokenResponse">
+   <element name="updateCookieToken">
     <complexType>
      <sequence>
-      <element name="getCookieTokenReturn" type="xsd:string"/>
+      <element name="customerId" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateCookieTokenResponse">
+    <complexType>
+     <sequence>
+      <element name="updateCookieTokenReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateToken">
+    <complexType>
+     <sequence>
+      <element name="customerId" type="xsd:int"/>
+      <element name="token" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="updateTokenResponse">
+    <complexType>
+     <sequence>
+      <element name="updateTokenReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="insertNewToken">
+    <complexType>
+     <sequence>
+      <element name="customerId" type="xsd:int"/>
+      <element name="token" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="insertNewTokenResponse">
+    <complexType>
+     <sequence>
+      <element name="insertNewTokenReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getPublicKeyFromEmail">
+    <complexType>
+     <sequence>
+      <element name="email" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getPublicKeyFromEmailResponse">
+    <complexType>
+     <sequence>
+      <element name="getPublicKeyFromEmailReturn" type="xsd:string"/>
      </sequence>
     </complexType>
    </element>
@@ -131,50 +175,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="updateToken">
-    <complexType>
-     <sequence>
-      <element name="customerId" type="xsd:int"/>
-      <element name="token" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="updateTokenResponse">
-    <complexType>
-     <sequence>
-      <element name="updateTokenReturn" type="xsd:boolean"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getPublicKeyFromEmail">
-    <complexType>
-     <sequence>
-      <element name="email" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="getPublicKeyFromEmailResponse">
-    <complexType>
-     <sequence>
-      <element name="getPublicKeyFromEmailReturn" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="insertNewToken">
-    <complexType>
-     <sequence>
-      <element name="customerId" type="xsd:int"/>
-      <element name="token" type="xsd:string"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="insertNewTokenResponse">
-    <complexType>
-     <sequence>
-      <element name="insertNewTokenReturn" type="xsd:boolean"/>
-     </sequence>
-    </complexType>
-   </element>
   </schema>
  </wsdl:types>
 
@@ -186,17 +186,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="createNewUserRequest">
+   <wsdl:message name="updateTokenResponse">
 
-      <wsdl:part element="impl:createNewUser" name="parameters">
+      <wsdl:part element="impl:updateTokenResponse" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="updateTokenResponse">
+   <wsdl:message name="createNewUserRequest">
 
-      <wsdl:part element="impl:updateTokenResponse" name="parameters">
+      <wsdl:part element="impl:createNewUser" name="parameters">
 
       </wsdl:part>
 
@@ -298,17 +298,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="updateCookieTokenRequest">
+   <wsdl:message name="loginCookieRequest">
 
-      <wsdl:part element="impl:updateCookieToken" name="parameters">
+      <wsdl:part element="impl:loginCookie" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="loginCookieRequest">
+   <wsdl:message name="updateCookieTokenRequest">
 
-      <wsdl:part element="impl:loginCookie" name="parameters">
+      <wsdl:part element="impl:updateCookieToken" name="parameters">
 
       </wsdl:part>
 
@@ -384,18 +384,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="getError">
-
-         <wsdl:input message="impl:getErrorRequest" name="getErrorRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getErrorResponse" name="getErrorResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="login">
 
          <wsdl:input message="impl:loginRequest" name="loginRequest">
@@ -408,25 +396,13 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="updateCookieToken">
+      <wsdl:operation name="getError">
 
-         <wsdl:input message="impl:updateCookieTokenRequest" name="updateCookieTokenRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:updateCookieTokenResponse" name="updateCookieTokenResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="loginCookie">
-
-         <wsdl:input message="impl:loginCookieRequest" name="loginCookieRequest">
+         <wsdl:input message="impl:getErrorRequest" name="getErrorRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:loginCookieResponse" name="loginCookieResponse">
+         <wsdl:output message="impl:getErrorResponse" name="getErrorResponse">
 
        </wsdl:output>
 
@@ -444,18 +420,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="getCustomerIdFromToken">
-
-         <wsdl:input message="impl:getCustomerIdFromTokenRequest" name="getCustomerIdFromTokenRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:getCustomerIdFromTokenResponse" name="getCustomerIdFromTokenResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="getCookieToken">
 
          <wsdl:input message="impl:getCookieTokenRequest" name="getCookieTokenRequest">
@@ -468,13 +432,37 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="createNewUser">
+      <wsdl:operation name="loginCookie">
 
-         <wsdl:input message="impl:createNewUserRequest" name="createNewUserRequest">
+         <wsdl:input message="impl:loginCookieRequest" name="loginCookieRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:createNewUserResponse" name="createNewUserResponse">
+         <wsdl:output message="impl:loginCookieResponse" name="loginCookieResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCustomerIdFromToken">
+
+         <wsdl:input message="impl:getCustomerIdFromTokenRequest" name="getCustomerIdFromTokenRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getCustomerIdFromTokenResponse" name="getCustomerIdFromTokenResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateCookieToken">
+
+         <wsdl:input message="impl:updateCookieTokenRequest" name="updateCookieTokenRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:updateCookieTokenResponse" name="updateCookieTokenResponse">
 
        </wsdl:output>
 
@@ -492,6 +480,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
+      <wsdl:operation name="insertNewToken">
+
+         <wsdl:input message="impl:insertNewTokenRequest" name="insertNewTokenRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:insertNewTokenResponse" name="insertNewTokenResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
       <wsdl:operation name="getPublicKeyFromEmail">
 
          <wsdl:input message="impl:getPublicKeyFromEmailRequest" name="getPublicKeyFromEmailRequest">
@@ -504,13 +504,13 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="insertNewToken">
+      <wsdl:operation name="createNewUser">
 
-         <wsdl:input message="impl:insertNewTokenRequest" name="insertNewTokenRequest">
+         <wsdl:input message="impl:createNewUserRequest" name="createNewUserRequest">
 
        </wsdl:input>
 
-         <wsdl:output message="impl:insertNewTokenResponse" name="insertNewTokenResponse">
+         <wsdl:output message="impl:createNewUserResponse" name="createNewUserResponse">
 
        </wsdl:output>
 
@@ -540,24 +540,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="getError">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getErrorRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getErrorResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="login">
 
          <wsdlsoap:operation soapAction=""/>
@@ -576,35 +558,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="updateCookieToken">
+      <wsdl:operation name="getError">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="updateCookieTokenRequest">
+         <wsdl:input name="getErrorRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="updateCookieTokenResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="loginCookie">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="loginCookieRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="loginCookieResponse">
+         <wsdl:output name="getErrorResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -630,24 +594,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="getCustomerIdFromToken">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="getCustomerIdFromTokenRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="getCustomerIdFromTokenResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="getCookieToken">
 
          <wsdlsoap:operation soapAction=""/>
@@ -666,17 +612,53 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="createNewUser">
+      <wsdl:operation name="loginCookie">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="createNewUserRequest">
+         <wsdl:input name="loginCookieRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="createNewUserResponse">
+         <wsdl:output name="loginCookieResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCustomerIdFromToken">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCustomerIdFromTokenRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCustomerIdFromTokenResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="updateCookieToken">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="updateCookieTokenRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="updateCookieTokenResponse">
 
             <wsdlsoap:body use="literal"/>
 
@@ -702,6 +684,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
+      <wsdl:operation name="insertNewToken">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="insertNewTokenRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="insertNewTokenResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
       <wsdl:operation name="getPublicKeyFromEmail">
 
          <wsdlsoap:operation soapAction=""/>
@@ -720,17 +720,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="insertNewToken">
+      <wsdl:operation name="createNewUser">
 
          <wsdlsoap:operation soapAction=""/>
 
-         <wsdl:input name="insertNewTokenRequest">
+         <wsdl:input name="createNewUserRequest">
 
             <wsdlsoap:body use="literal"/>
 
          </wsdl:input>
 
-         <wsdl:output name="insertNewTokenResponse">
+         <wsdl:output name="createNewUserResponse">
 
             <wsdlsoap:body use="literal"/>
 
