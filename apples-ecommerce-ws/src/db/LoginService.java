@@ -497,13 +497,12 @@ private void getKeys() {
 			preparedStatement = connection.prepareStatement(
 					"SELECT * FROM customer WHERE email = ?");
 			preparedStatement.setString(1, email);
-
-			// Retrieve the result of RETURNING statement to get the current id.
 			resultSet = preparedStatement.executeQuery();
-			resultSet.next();
-			pKey = resultSet.getString("key");
-			preparedStatement.close();
-			connection.setAutoCommit(true);
+			if (resultSet.next()){
+				pKey = resultSet.getString("key");
+				preparedStatement.close();
+				connection.setAutoCommit(true);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return "";
