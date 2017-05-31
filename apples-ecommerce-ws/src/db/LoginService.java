@@ -313,8 +313,7 @@ private void getKeys() {
 		try {
 			id = getCustomerIdFromToken(cookieId);
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return 0;
 		}
 		return id;
 	}
@@ -374,12 +373,15 @@ private void getKeys() {
 
 			// Retrieve the result of RETURNING statement to get the current id.
 			resultSet = preparedStatement.executeQuery();
-			resultSet.next();
+			if (!resultSet.next())
+				return 0;
+			
 			customerId = resultSet.getInt(1);
 			preparedStatement.close();
 			connection.setAutoCommit(true);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			return 0;
 		} finally {
 			ConnectionManager.close(connection);
 		}		
@@ -394,10 +396,10 @@ private void getKeys() {
 	    try {
 				connection.setAutoCommit(false);
 				preparedStatement = connection.prepareStatement(
-						"INSERT INTO cookie (cookie_id, customer_id) "+
+						"INSERT INTO cookie (cookie_id,customer_id) "+
 								"VALUES (?, ?) " );
-				preparedStatement.setInt(1, customerId);
-				preparedStatement.setString(2, token);
+				preparedStatement.setString(1, token);
+				preparedStatement.setInt(2, customerId);
 				preparedStatement.executeUpdate();
 				preparedStatement.close();
 				connection.setAutoCommit(true);
@@ -512,5 +514,24 @@ private void getKeys() {
 		return pKey;		
 	}
 
+	@Override
+	public boolean logout(String cookie_id) {
+		PreparedStatement preparedStatement;
+		Connection connection = ConnectionManager.connect();
+	    try {
+				connection.setAutoCommit(false);
+				preparedStatement = connection.prepareStatement(
+						"DELETE FROM cookie  "+
+								"WHERE cookie_id = ?" );
+				preparedStatement.setString(1, cookie_id);
+				preparedStatement.executeUpdate();
+				preparedStatement.close();
+				connection.setAutoCommit(true);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				return false;
+			}
+	    		return true;
+	}
 }
-

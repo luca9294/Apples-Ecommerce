@@ -35,6 +35,8 @@ public interface LoginServiceInt {
 	public String getPublicKey();
 	@WebMethod
 	public String getPublicKeyFromEmail(String email);
+	@WebMethod
+	public boolean logout(String cookie_id);
 	
 	
 
