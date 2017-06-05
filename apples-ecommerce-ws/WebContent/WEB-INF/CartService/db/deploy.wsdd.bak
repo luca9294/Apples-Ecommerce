@@ -1,0 +1,42 @@
+<!-- Use this file to deploy some handlers/chains and services      -->
+<!-- Two ways to do this:                                           -->
+<!--   java org.apache.axis.client.AdminClient deploy.wsdd          -->
+<!--      after the axis server is running                          -->
+<!-- or                                                             -->
+<!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   -->
+<!--      from the same directory that the Axis engine runs         -->
+
+<deployment
+    xmlns="http://xml.apache.org/axis/wsdd/"
+    xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from CartService WSDL service -->
+
+  <service name="Cart" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://db"/>
+      <parameter name="wsdlServiceElement" value="CartService"/>
+      <parameter name="schemaQualified" value="http://Serializables,http://db"/>
+      <parameter name="wsdlServicePort" value="Cart"/>
+      <parameter name="className" value="db.CartSoapBindingImpl"/>
+      <parameter name="wsdlPortType" value="Cart"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="getGUUID" qname="operNS:getGUUID" xmlns:operNS="http://db" returnQName="retNS:getGUUIDReturn" xmlns:retNS="http://db" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+      </operation>
+      <operation name="getCartContent" qname="operNS:getCartContent" xmlns:operNS="http://db" returnQName="retNS:getCartContentReturn" xmlns:retNS="http://db" returnType="rtns:CartEntryObject" xmlns:rtns="http://Serializables" soapAction="" >
+        <parameter qname="pns:cart_id" xmlns:pns="http://db" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
+      <operation name="addCartEntry" qname="operNS:addCartEntry" xmlns:operNS="http://db" returnQName="retNS:addCartEntryReturn" xmlns:retNS="http://db" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:co" xmlns:pns="http://db" type="tns:CartEntryObject" xmlns:tns="http://Serializables"/>
+      </operation>
+      <parameter name="allowedMethods" value="addCartEntry getGUUID getCartContent"/>
+
+      <typeMapping
+        xmlns:ns="http://Serializables"
+        qname="ns:CartEntryObject"
+        type="java:Serializables.CartEntryObject"
+        serializer="org.apache.axis.encoding.ser.BeanSerializerFactory"
+        deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory"
+        encodingStyle=""
+      />
+  </service>
+</deployment>

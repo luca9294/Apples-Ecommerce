@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://db" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://db" xmlns:intf="http://db" xmlns:tns1="http://Serializables" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://db" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://Serializables"/>
+   <element name="getGUUID">
+    <complexType/>
+   </element>
+   <element name="getGUUIDResponse">
+    <complexType>
+     <sequence>
+      <element name="getGUUIDReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getCartContent">
+    <complexType>
+     <sequence>
+      <element name="cart_id" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getCartContentResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getCartContentReturn" type="tns1:CartEntryObject"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addCartEntry">
+    <complexType>
+     <sequence>
+      <element name="co" type="tns1:CartEntryObject"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addCartEntryResponse">
+    <complexType>
+     <sequence>
+      <element name="addCartEntryReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://Serializables" xmlns="http://www.w3.org/2001/XMLSchema">
+   <complexType name="CartEntryObject">
+    <sequence>
+     <element name="cartId" type="xsd:int"/>
+     <element name="date" nillable="true" type="xsd:string"/>
+     <element name="productId" type="xsd:int"/>
+     <element name="quantity" type="xsd:int"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="getGUUIDResponse">
+
+      <wsdl:part element="impl:getGUUIDResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getGUUIDRequest">
+
+      <wsdl:part element="impl:getGUUID" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCartContentRequest">
+
+      <wsdl:part element="impl:getCartContent" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addCartEntryRequest">
+
+      <wsdl:part element="impl:addCartEntry" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addCartEntryResponse">
+
+      <wsdl:part element="impl:addCartEntryResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCartContentResponse">
+
+      <wsdl:part element="impl:getCartContentResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="Cart">
+
+      <wsdl:operation name="getGUUID">
+
+         <wsdl:input message="impl:getGUUIDRequest" name="getGUUIDRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getGUUIDResponse" name="getGUUIDResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCartContent">
+
+         <wsdl:input message="impl:getCartContentRequest" name="getCartContentRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getCartContentResponse" name="getCartContentResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addCartEntry">
+
+         <wsdl:input message="impl:addCartEntryRequest" name="addCartEntryRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:addCartEntryResponse" name="addCartEntryResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="CartSoapBinding" type="impl:Cart">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getGUUID">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getGUUIDRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getGUUIDResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCartContent">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCartContentRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCartContentResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addCartEntry">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addCartEntryRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addCartEntryResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="CartService">
+
+      <wsdl:port binding="impl:CartSoapBinding" name="Cart">
+
+         <wsdlsoap:address location="http://localhost:8080/apples-ecommerce-ws/services/Cart"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
