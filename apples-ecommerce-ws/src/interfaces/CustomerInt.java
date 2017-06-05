@@ -2,7 +2,6 @@ package interfaces;
 
 import javax.jws.WebMethod;
 import javax.jws.WebService;
-import javax.jws.soap.SOAPBinding;
 
 import Serializables.CustomerObject;
 
@@ -18,6 +17,9 @@ public interface CustomerInt {
 	
 	@WebMethod
 	public CustomerObject find(int id, String encrpytedPassword);
+	
+	@WebMethod
+	public CustomerObject findByCookie(int id, String cookieId);
 
 	
 }
