@@ -1,28 +1,11 @@
 package db;
 
-import java.rmi.RemoteException;
-import java.security.InvalidKeyException;
-import java.security.KeyFactory;
-import java.security.NoSuchAlgorithmException;
-import java.security.PrivateKey;
-import java.security.PublicKey;
-import java.security.spec.InvalidKeySpecException;
-import java.security.spec.PKCS8EncodedKeySpec;
-import java.security.spec.X509EncodedKeySpec;
 import java.sql.*;
-import java.util.ArrayList;
-import org.apache.axis.encoding.Base64;
 
 import Serializables.CustomerObject;
 
-import javax.crypto.BadPaddingException;
-import javax.crypto.Cipher;
-import javax.crypto.IllegalBlockSizeException;
-import javax.crypto.NoSuchPaddingException;
-import javax.crypto.spec.SecretKeySpec;
 import javax.jws.WebResult;
 import javax.jws.WebService;
-import javax.xml.bind.annotation.XmlRootElement;
 
 import connection.ConnectionManager;
 import helper.CustomerUtilities;
@@ -99,33 +82,7 @@ public class Customer implements CustomerInt {
     @Override 
 	public CustomerObject find(int id, String encryptedPassword) {
 		CustomerObject customer = findById(id);
-		String pk = "";
-		String[] keys;
-		helper.KeysManagerProxy kmp = new helper.KeysManagerProxy();
-		try {
-			pk = kmp.getPrivatekey(String.valueOf(id));
-		} catch (RemoteException e) {
-			e.printStackTrace();
-		}
-		
-		String painPwd = CustomerUtilities.getDecryptedString(pk, customer.getKey());
-		String insPwd = CustomerUtilities.getDecryptedString(pk, encryptedPassword);
-		if (insPwd.equals(painPwd)){
-			keys = CustomerUtilities.getKeys();
-			CustomerUtilities.insertNewKey(customer.getId(), keys[0]);
-			String newPwd = CustomerUtilities.getEncryptedString(painPwd, keys[0]);
-			CustomerUtilities.insertNewPwd(customer.getId(), newPwd);
-			try {
-				kmp.updatePrivateKey(customer.getId() + "", keys[1]);
-			} catch (RemoteException e) {
-				e.printStackTrace();
-			}
-			keys = null;
-			return customer;
-		} else {
-			customer = null;
-			return customer;
-		}
+		return CustomerUtilities.updateCustomerKeys(customer, encryptedPassword);
 	}
     
     @WebResult(name="CustomerObject")

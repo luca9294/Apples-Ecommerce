@@ -1,5 +1,6 @@
 package helper;
 
+import java.rmi.RemoteException;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.KeyPair;
@@ -21,6 +22,7 @@ import javax.crypto.NoSuchPaddingException;
 
 import org.apache.axis.encoding.Base64;
 
+import Serializables.CustomerObject;
 import connection.ConnectionManager;
 
 public class CustomerUtilities {
@@ -139,5 +141,35 @@ public class CustomerUtilities {
 			}
 	    		return true;
 	}
-
+  	
+  	public static CustomerObject updateCustomerKeys(CustomerObject oldCustomerObject, String encryptedPassword) {
+  		CustomerObject customer = oldCustomerObject;
+  		String pk = "";
+		String[] keys;
+		helper.KeysManagerProxy kmp = new helper.KeysManagerProxy();
+		try {
+			pk = kmp.getPrivatekey(String.valueOf(customer.getId()));
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		
+		String painPwd = CustomerUtilities.getDecryptedString(pk, customer.getPwd());
+		String insPwd = CustomerUtilities.getDecryptedString(pk, encryptedPassword);
+		if (!insPwd.isEmpty() && !painPwd.isEmpty() && insPwd.equals(painPwd)){
+			keys = CustomerUtilities.getKeys();
+			CustomerUtilities.insertNewKey(customer.getId(), keys[0]);
+			String newPwd = CustomerUtilities.getEncryptedString(painPwd, keys[0]);
+			CustomerUtilities.insertNewPwd(customer.getId(), newPwd);
+			try {
+				kmp.updatePrivateKey(customer.getId() + "", keys[1]);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+			keys = null;
+			return customer;
+		} else {
+			customer = null;
+			return customer;
+		}
+  	}
 }

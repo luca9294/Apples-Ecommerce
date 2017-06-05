@@ -163,38 +163,12 @@ public class LoginService implements interfaces.LoginServiceInt {
 			return -1;
 		else 
 		{
-		   String pk = "";
-		   helper.KeysManagerProxy kmp = new helper.KeysManagerProxy();
-		   try {
-			pk = kmp.getPrivatekey(customer.getId() + "");
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		   
-		   String painPwd = CustomerUtilities.getDecryptedString(pk, customer.getPwd());
-		   String insPwd = CustomerUtilities.getDecryptedString(pk, pwd);
-		   if (insPwd.equals(painPwd)){
-			   keys = CustomerUtilities.getKeys();
-			   CustomerUtilities.insertNewKey(customer.getId(), keys[0]);
-			   String newPwd = CustomerUtilities.getEncryptedString(painPwd, keys[0]);
-			   CustomerUtilities.insertNewPwd(customer.getId(), newPwd);
-			   try {
-				kmp.updatePrivateKey(customer.getId() + "", keys[1]);
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			customer = CustomerUtilities.updateCustomerKeys(customer, pwd);
+			if (customer != null) {
+				return customer.getId();
+			} else {
+				return 0;
 			}
-			   keys = null;
-			   return customer.getId();
-		   }
-		   
-		   else{
-			   customer = null;
-			   return 0;
-		   }
-		   
-		   
 		}
 	}
 	
