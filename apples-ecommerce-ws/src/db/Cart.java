@@ -18,14 +18,14 @@ public class Cart implements interfaces.CartInt {
 	public boolean addCartEntry(CartEntryObject co) {
 		
 		boolean result = false; 
+		
 		if(this.checkExistance(co.getCartId(), co.getProductId())){
 
 			result = this.updateProductQuantity(co.getCartId(), co.getProductId(), co.getQuantity());
 		}
 		else {
-			result = this.addProductToCart(co.getCartId(), co.getProductId(), co.getQuantity());
+			result = this.addProductToCart(co.getCartId(), co.getProductId(), co.getQuantity(), co.getDate());
 		}
-
 		return result;
 	}
 
@@ -38,18 +38,24 @@ public class Cart implements interfaces.CartInt {
 	private boolean checkExistance(int cart_id, int product_id) {		
 		boolean  result = false;
 		ResultSet resultSet;
-		PreparedStatement preparedStatement;
-		Connection connection = ConnectionManager.connect();
+		PreparedStatement preparedStatement=null;
+		Connection connection = null;
 		try {
+			connection = ConnectionManager.connect();
+			connection.setAutoCommit(false);
+			
 			preparedStatement = connection.prepareStatement(
 					"SELECT product_id FROM cart WHERE cart_id = ?");
 			preparedStatement.setInt(1, cart_id);
 			resultSet = preparedStatement.executeQuery();
-			if(resultSet.next()) {
-				result = true;
-
-			}
+			while(resultSet.next()) {
+				if(resultSet.getInt("product_id")==product_id) {
+					result = true;
+				}
+			}		
+			System.out.println(result);
 			preparedStatement.close();
+			connection.setAutoCommit(true);			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -65,7 +71,6 @@ public class Cart implements interfaces.CartInt {
 	private boolean updateProductQuantity(int cart_id,int product_id, int quantity){
 	
 		boolean result = false;
-		ResultSet resultSet;
 		PreparedStatement preparedStatement;
 		Connection connection = ConnectionManager.connect();
 		try {
@@ -77,7 +82,7 @@ public class Cart implements interfaces.CartInt {
 			preparedStatement.setInt(1, quantity);
 			preparedStatement.setInt(2, product_id);
 			preparedStatement.setInt(3, cart_id);
-			resultSet = preparedStatement.executeQuery();
+			preparedStatement.executeUpdate();
 
 			preparedStatement.close();
 			result = true;
@@ -99,32 +104,30 @@ public class Cart implements interfaces.CartInt {
 	 * @param quantity
 	 * @return
 	 */
-	private boolean addProductToCart(int cart_id,int product_id, int quantity) {
+	private boolean addProductToCart(int cart_id,int product_id, int quantity, String date) {
 
 		boolean result=false;
-		ResultSet resultSet;
 		PreparedStatement preparedStatement;
 		Connection connection = ConnectionManager.connect();
 		try {
 			connection.setAutoCommit(false);
 			preparedStatement = connection.prepareStatement(
-					"INSERT INTO cart (cart_id, product_id, quantity, date" +
-					"VALUES (?, ?, ?,GETDATE())");
+					"INSERT INTO cart (cart_id, product_id, quantity, cart_date)" +
+					"VALUES (?, ?, ?, ?)");
 			preparedStatement.setInt(1, cart_id);
 			preparedStatement.setInt(2, product_id);
 			preparedStatement.setInt(3, quantity);
+			preparedStatement.setString(4, date);
+
 
 			// Retrieve the result of RETURNING statement to get the current id.
-			resultSet = preparedStatement.executeQuery();
-			if (resultSet.next()) {				
-				connection.commit();	
-				result = true;
-			}
-			else {
-				connection.rollback();
-			}
+			int a = preparedStatement.executeUpdate();
+			System.out.println("Eseguito " + a);
 			preparedStatement.close();
+			
 			connection.setAutoCommit(true);
+			result = true;
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -150,7 +153,7 @@ public class Cart implements interfaces.CartInt {
 			resultSet = preparedStatement.executeQuery();
 			int index=0;
 			while(resultSet.next()) {				
-				CartEntryObject o = new CartEntryObject(resultSet.getInt("cart_id"),resultSet.getInt("product_id"),resultSet.getInt("quantity"),resultSet.getDate("date"));
+				CartEntryObject o = new CartEntryObject(resultSet.getInt("cart_id"),resultSet.getInt("product_id"),resultSet.getInt("quantity"),resultSet.getString("date"));
 				a[index]=o;
 				index++;
 			}
@@ -167,8 +170,7 @@ public class Cart implements interfaces.CartInt {
 	
 	@Override
 	public String getGUUID() {
-		UUID uuid = UUID.randomUUID();
-		String randomUUIDString = uuid.toString();
-		return randomUUIDString;
+		int randomNum = (int) (Math.pow(10, 8) + (Math.random() * (Math.pow(10, 6)-1)));
+		return (randomNum + "");
 	}
 }

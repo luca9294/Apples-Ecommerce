@@ -15,12 +15,12 @@ public class CartEntryObject {
 	@XmlElement(name = "quantity")
 	private int quantity;
 	@XmlElement(name = "cart_date")
-	private Date cart_date;
+	private String cart_date;
 	
 	public CartEntryObject(){
 		
 	}
-	public CartEntryObject(int cart_id, int product_id, int quantity, Date cart_date){
+	public CartEntryObject(int cart_id, int product_id, int quantity, String cart_date){
 		this.cart_id = cart_id;
 		this.product_id = product_id;
 		this.quantity = quantity;
@@ -39,7 +39,7 @@ public class CartEntryObject {
 		return quantity;
 	}
 	
-	public Date cart_date(){
+	public String getDate(){
 		return cart_date;
 	}
 	
