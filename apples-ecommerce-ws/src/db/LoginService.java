@@ -228,7 +228,7 @@ public class LoginService implements interfaces.LoginServiceInt {
 	}
 	
 	@Override
-	public String updateCookieToken(int customerId) throws SQLException{
+	public String updateCookieToken(int customerId, String cookieId) throws SQLException{
 		
 		int randomNum = (int) (Math.pow(10, 8) + (Math.random() * (Math.pow(10, 6)-1)));
 
@@ -236,7 +236,7 @@ public class LoginService implements interfaces.LoginServiceInt {
 		PreparedStatement preparedStatement = null;
 
 		String updateTableSQL = "UPDATE cookie SET cookie_id = ? "
-				                  + " WHERE customer_id = ?";
+				                  + " WHERE customer_id = ? AND cookie_id = ?";
 
 		try {
 			dbConnection = ConnectionManager.connect();
@@ -244,6 +244,7 @@ public class LoginService implements interfaces.LoginServiceInt {
 
 			preparedStatement.setString(1, (randomNum + ""));
 			preparedStatement.setInt(2, customerId);
+			preparedStatement.setString(3, cookieId);
 
 			// execute update SQL stetement
 			preparedStatement.executeUpdate();

@@ -22,7 +22,7 @@ public interface LoginServiceInt {
 	@WebMethod
 	public int loginCookie(String cookieId);
 	@WebMethod
-	public String updateCookieToken(int customerId) throws SQLException;
+	public String updateCookieToken(int customerId, String cookieId) throws SQLException;
 	@WebMethod
 	public int getCustomerIdFromToken(String cookieId) throws SQLException;
 	@WebMethod
