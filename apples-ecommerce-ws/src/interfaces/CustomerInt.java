@@ -17,7 +17,7 @@ public interface CustomerInt {
 	public boolean delete();
 	
 	@WebMethod
-	public CustomerObject find(int id);
+	public CustomerObject find(int id, String encrpytedPassword);
 
 	
 }

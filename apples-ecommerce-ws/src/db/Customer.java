@@ -1,10 +1,13 @@
 package db;
 
+import java.rmi.RemoteException;
 import java.security.InvalidKeyException;
 import java.security.KeyFactory;
 import java.security.NoSuchAlgorithmException;
+import java.security.PrivateKey;
 import java.security.PublicKey;
 import java.security.spec.InvalidKeySpecException;
+import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 import java.sql.*;
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import connection.ConnectionManager;
+import helper.CustomerUtilities;
 import interfaces.CustomerInt;
 
 
@@ -93,8 +97,39 @@ public class Customer implements CustomerInt {
 
     @WebResult(name="CustomerObject")
     @Override 
-	public CustomerObject find(int id) {
-		CustomerObject customer = null;
+	public CustomerObject find(int id, String encryptedPassword) {
+		CustomerObject customer = findById(id);
+		String pk = "";
+		String[] keys;
+		helper.KeysManagerProxy kmp = new helper.KeysManagerProxy();
+		try {
+			pk = kmp.getPrivatekey(String.valueOf(id));
+		} catch (RemoteException e) {
+			e.printStackTrace();
+		}
+		
+		String painPwd = CustomerUtilities.getDecryptedString(pk, customer.getKey());
+		String insPwd = CustomerUtilities.getDecryptedString(pk, encryptedPassword);
+		if (insPwd.equals(painPwd)){
+			keys = CustomerUtilities.getKeys();
+			CustomerUtilities.insertNewKey(customer.getId(), keys[0]);
+			String newPwd = CustomerUtilities.getEncryptedString(painPwd, keys[0]);
+			CustomerUtilities.insertNewPwd(customer.getId(), newPwd);
+			try {
+				kmp.updatePrivateKey(customer.getId() + "", keys[1]);
+			} catch (RemoteException e) {
+				e.printStackTrace();
+			}
+			keys = null;
+			return customer;
+		} else {
+			customer = null;
+			return customer;
+		}
+	}
+    
+    private CustomerObject findById(int id) {
+    	CustomerObject customer = null;
 		ResultSet resultSet;
 		PreparedStatement preparedStatement;
 		Connection connection = ConnectionManager.connect();
@@ -118,7 +153,5 @@ public class Customer implements CustomerInt {
 			ConnectionManager.close(connection);
 		}
 		return customer;
-	}
-
-
+    }
 }
