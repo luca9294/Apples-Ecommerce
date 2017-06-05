@@ -7,8 +7,8 @@
   <ns1:parameter name="dotNetSoapEncFix" value="true"/>
   <ns1:parameter name="enableNamespacePrefixOptimization" value="false"/>
   <ns1:parameter name="sendXMLDeclaration" value="true"/>
-  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:parameter name="sendXsiTypes" value="true"/>
+  <ns1:parameter name="attachments.implementation" value="org.apache.axis.attachments.AttachmentsImpl"/>
   <ns1:requestFlow>
    <ns1:handler type="java:org.apache.axis.handlers.JWSHandler">
     <ns1:parameter name="scope" value="session"/>
@@ -35,11 +35,11 @@
    <ns1:parameter qname="ns3:privateKey" type="xsd:string"/>
   </ns1:operation>
   <ns1:parameter name="allowedMethods" value="insertNewKey getPrivatekey updatePrivateKey"/>
-  <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="wsdlPortType" value="KeysManager"/>
-  <ns1:parameter name="className" value="helper.KeysManager"/>
-  <ns1:parameter name="wsdlServicePort" value="KeysManager"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="schemaQualified" value="http://helper"/>
+  <ns1:parameter name="wsdlServicePort" value="KeysManager"/>
+  <ns1:parameter name="className" value="helper.KeysManager"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://helper"/>
   <ns1:parameter name="wsdlServiceElement" value="KeysManagerService"/>
  </ns1:service>
@@ -55,11 +55,11 @@
   </ns1:operation>
   <ns1:operation name="getCategories" qname="ns6:getCategories" returnQName="ns6:getCategoriesReturn" returnType="xsd:string" soapAction="" xmlns:ns6="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   <ns1:parameter name="allowedMethods" value="getCategories getProducts"/>
-  <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="wsdlPortType" value="Category"/>
-  <ns1:parameter name="className" value="db.Category"/>
-  <ns1:parameter name="wsdlServicePort" value="Category"/>
+  <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="schemaQualified" value="http://Serializables,http://db"/>
+  <ns1:parameter name="wsdlServicePort" value="Category"/>
+  <ns1:parameter name="className" value="db.Category"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://db"/>
   <ns1:parameter name="wsdlServiceElement" value="CategoryService"/>
   <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns7:ProductObject" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:Serializables.ProductObject" xmlns:ns7="http://Serializables"/>
@@ -87,11 +87,11 @@
    <ns1:parameter qname="ns11:pwd" type="xsd:string" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
   <ns1:parameter name="allowedMethods" value="modify find delete"/>
-  <ns1:parameter name="wsdlPortType" value="Customer"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
-  <ns1:parameter name="schemaQualified" value="http://Serializables,http://db"/>
-  <ns1:parameter name="wsdlServicePort" value="Customer"/>
+  <ns1:parameter name="wsdlPortType" value="Customer"/>
   <ns1:parameter name="className" value="db.Customer"/>
+  <ns1:parameter name="wsdlServicePort" value="Customer"/>
+  <ns1:parameter name="schemaQualified" value="http://Serializables,http://db"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://db"/>
   <ns1:parameter name="wsdlServiceElement" value="CustomerService"/>
   <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns13:CustomerObject" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:Serializables.CustomerObject" xmlns:ns13="http://Serializables"/>
@@ -146,21 +146,21 @@
    <ns1:parameter qname="ns26:pbKey" type="xsd:string"/>
   </ns1:operation>
   <ns1:parameter name="allowedMethods" value="loginCookie updateToken insertNewToken getPublicKey login createNewUser getError getCustomerIdFromToken logout updateCookieToken getPublicKeyFromEmail getCookieToken getEncryptedString"/>
-  <ns1:parameter name="wsdlPortType" value="LoginService"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
-  <ns1:parameter name="schemaQualified" value="http://db"/>
-  <ns1:parameter name="wsdlServicePort" value="LoginService"/>
+  <ns1:parameter name="wsdlPortType" value="LoginService"/>
   <ns1:parameter name="className" value="db.LoginService"/>
+  <ns1:parameter name="wsdlServicePort" value="LoginService"/>
+  <ns1:parameter name="schemaQualified" value="http://db"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://db"/>
   <ns1:parameter name="wsdlServiceElement" value="LoginServiceService"/>
  </ns1:service>
  <ns1:service name="Cart" provider="java:RPC" style="wrapped" use="literal">
-  <ns1:operation name="getGUUID" qname="ns27:getGUUID" returnQName="ns27:getGUUIDReturn" returnType="xsd:string" soapAction="" xmlns:ns27="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-  <ns1:operation name="getCartContent" qname="ns28:getCartContent" returnQName="ns28:getCartContentReturn" returnType="ns29:CartEntryObject" soapAction="" xmlns:ns28="http://db" xmlns:ns29="http://Serializables">
-   <ns1:parameter qname="ns28:cart_id" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="addCartEntry" qname="ns27:addCartEntry" returnQName="ns27:addCartEntryReturn" returnType="xsd:boolean" soapAction="" xmlns:ns27="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns27:co" type="ns28:CartEntryObject" xmlns:ns28="http://Serializables"/>
   </ns1:operation>
-  <ns1:operation name="addCartEntry" qname="ns30:addCartEntry" returnQName="ns30:addCartEntryReturn" returnType="xsd:boolean" soapAction="" xmlns:ns30="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns30:co" type="ns31:CartEntryObject" xmlns:ns31="http://Serializables"/>
+  <ns1:operation name="getGUUID" qname="ns29:getGUUID" returnQName="ns29:getGUUIDReturn" returnType="xsd:string" soapAction="" xmlns:ns29="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="getCartContent" qname="ns30:getCartContent" returnQName="ns30:getCartContentReturn" returnType="ns31:CartEntryObject" soapAction="" xmlns:ns30="http://db" xmlns:ns31="http://Serializables">
+   <ns1:parameter qname="ns30:cart_id" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
   </ns1:operation>
   <ns1:parameter name="allowedMethods" value="addCartEntry getGUUID getCartContent"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>

@@ -20,13 +20,13 @@
       <parameter name="className" value="db.CartSoapBindingImpl"/>
       <parameter name="wsdlPortType" value="Cart"/>
       <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="addCartEntry" qname="operNS:addCartEntry" xmlns:operNS="http://db" returnQName="retNS:addCartEntryReturn" xmlns:retNS="http://db" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:co" xmlns:pns="http://db" type="tns:CartEntryObject" xmlns:tns="http://Serializables"/>
+      </operation>
       <operation name="getGUUID" qname="operNS:getGUUID" xmlns:operNS="http://db" returnQName="retNS:getGUUIDReturn" xmlns:retNS="http://db" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
       </operation>
       <operation name="getCartContent" qname="operNS:getCartContent" xmlns:operNS="http://db" returnQName="retNS:getCartContentReturn" xmlns:retNS="http://db" returnType="rtns:CartEntryObject" xmlns:rtns="http://Serializables" soapAction="" >
         <parameter qname="pns:cart_id" xmlns:pns="http://db" type="tns:int" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
-      </operation>
-      <operation name="addCartEntry" qname="operNS:addCartEntry" xmlns:operNS="http://db" returnQName="retNS:addCartEntryReturn" xmlns:retNS="http://db" returnType="rtns:boolean" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
-        <parameter qname="pns:co" xmlns:pns="http://db" type="tns:CartEntryObject" xmlns:tns="http://Serializables"/>
       </operation>
       <parameter name="allowedMethods" value="addCartEntry getGUUID getCartContent"/>
 

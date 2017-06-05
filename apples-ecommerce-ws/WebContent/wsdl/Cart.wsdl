@@ -5,6 +5,20 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
  <wsdl:types>
   <schema elementFormDefault="qualified" targetNamespace="http://db" xmlns="http://www.w3.org/2001/XMLSchema">
    <import namespace="http://Serializables"/>
+   <element name="addCartEntry">
+    <complexType>
+     <sequence>
+      <element name="co" type="tns1:CartEntryObject"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addCartEntryResponse">
+    <complexType>
+     <sequence>
+      <element name="addCartEntryReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
    <element name="getGUUID">
     <complexType/>
    </element>
@@ -26,20 +40,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
     <complexType>
      <sequence>
       <element maxOccurs="unbounded" name="getCartContentReturn" type="tns1:CartEntryObject"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="addCartEntry">
-    <complexType>
-     <sequence>
-      <element name="co" type="tns1:CartEntryObject"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="addCartEntryResponse">
-    <complexType>
-     <sequence>
-      <element name="addCartEntryReturn" type="xsd:boolean"/>
      </sequence>
     </complexType>
    </element>
@@ -72,17 +72,17 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="getCartContentRequest">
+   <wsdl:message name="addCartEntryRequest">
 
-      <wsdl:part element="impl:getCartContent" name="parameters">
+      <wsdl:part element="impl:addCartEntry" name="parameters">
 
       </wsdl:part>
 
    </wsdl:message>
 
-   <wsdl:message name="addCartEntryRequest">
+   <wsdl:message name="getCartContentRequest">
 
-      <wsdl:part element="impl:addCartEntry" name="parameters">
+      <wsdl:part element="impl:getCartContent" name="parameters">
 
       </wsdl:part>
 
@@ -105,6 +105,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    </wsdl:message>
 
    <wsdl:portType name="Cart">
+
+      <wsdl:operation name="addCartEntry">
+
+         <wsdl:input message="impl:addCartEntryRequest" name="addCartEntryRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:addCartEntryResponse" name="addCartEntryResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
 
       <wsdl:operation name="getGUUID">
 
@@ -130,23 +142,29 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="addCartEntry">
-
-         <wsdl:input message="impl:addCartEntryRequest" name="addCartEntryRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:addCartEntryResponse" name="addCartEntryResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
    </wsdl:portType>
 
    <wsdl:binding name="CartSoapBinding" type="impl:Cart">
 
       <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="addCartEntry">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addCartEntryRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addCartEntryResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
 
       <wsdl:operation name="getGUUID">
 
@@ -177,24 +195,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="getCartContentResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
-      <wsdl:operation name="addCartEntry">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="addCartEntryRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="addCartEntryResponse">
 
             <wsdlsoap:body use="literal"/>
 

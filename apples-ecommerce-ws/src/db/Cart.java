@@ -18,6 +18,7 @@ public class Cart implements interfaces.CartInt {
 	public boolean addCartEntry(CartEntryObject co) {
 		
 		boolean result = false; 
+		
 		if(this.checkExistance(co.getCartId(), co.getProductId())){
 
 			result = this.updateProductQuantity(co.getCartId(), co.getProductId(), co.getQuantity());
@@ -25,7 +26,6 @@ public class Cart implements interfaces.CartInt {
 		else {
 			result = this.addProductToCart(co.getCartId(), co.getProductId(), co.getQuantity(), co.getDate());
 		}
-
 		return result;
 	}
 
@@ -38,9 +38,12 @@ public class Cart implements interfaces.CartInt {
 	private boolean checkExistance(int cart_id, int product_id) {		
 		boolean  result = false;
 		ResultSet resultSet;
-		PreparedStatement preparedStatement;
-		Connection connection = ConnectionManager.connect();
+		PreparedStatement preparedStatement=null;
+		Connection connection = null;
 		try {
+			connection = ConnectionManager.connect();
+			connection.setAutoCommit(false);
+			
 			preparedStatement = connection.prepareStatement(
 					"SELECT product_id FROM cart WHERE cart_id = ?");
 			preparedStatement.setInt(1, cart_id);
@@ -49,9 +52,10 @@ public class Cart implements interfaces.CartInt {
 				if(resultSet.getInt("product_id")==product_id) {
 					result = true;
 				}
-			}
+			}		
 			System.out.println(result);
 			preparedStatement.close();
+			connection.setAutoCommit(true);			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
@@ -120,6 +124,8 @@ public class Cart implements interfaces.CartInt {
 			int a = preparedStatement.executeUpdate();
 			System.out.println("Eseguito " + a);
 			preparedStatement.close();
+			
+			connection.setAutoCommit(true);
 			result = true;
 
 		} catch (SQLException e) {
@@ -164,8 +170,7 @@ public class Cart implements interfaces.CartInt {
 	
 	@Override
 	public String getGUUID() {
-		UUID uuid = UUID.randomUUID();
-		String randomUUIDString = uuid.toString();
-		return randomUUIDString;
+		int randomNum = (int) (Math.pow(10, 8) + (Math.random() * (Math.pow(10, 6)-1)));
+		return (randomNum + "");
 	}
 }
