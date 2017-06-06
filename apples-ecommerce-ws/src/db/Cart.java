@@ -153,7 +153,7 @@ public class Cart implements interfaces.CartInt {
 			resultSet = preparedStatement.executeQuery();
 			int index=0;
 			while(resultSet.next()) {				
-				CartEntryObject o = new CartEntryObject(resultSet.getInt("cart_id"),resultSet.getInt("product_id"),resultSet.getInt("quantity"),resultSet.getString("date"));
+				CartEntryObject o = new CartEntryObject(resultSet.getInt("cart_id"),resultSet.getInt("product_id"),resultSet.getInt("quantity"),resultSet.getString("cart_date"));
 				a[index]=o;
 				index++;
 			}

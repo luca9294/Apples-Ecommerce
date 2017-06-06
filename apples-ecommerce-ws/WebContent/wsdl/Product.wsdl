@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://db" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://db" xmlns:intf="http://db" xmlns:tns1="http://Serializables" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://db" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://Serializables"/>
+   <element name="findProduct">
+    <complexType>
+     <sequence>
+      <element name="product_id" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="findProductResponse">
+    <complexType>
+     <sequence>
+      <element name="findProductReturn" type="tns1:ProductObject"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://Serializables" xmlns="http://www.w3.org/2001/XMLSchema">
+   <complexType name="ProductObject">
+    <sequence>
+     <element name="category_id" type="xsd:int"/>
+     <element name="description" nillable="true" type="xsd:string"/>
+     <element name="imgLink" nillable="true" type="xsd:string"/>
+     <element name="price" type="xsd:int"/>
+     <element name="price_type" type="xsd:int"/>
+     <element name="product_id" type="xsd:int"/>
+     <element name="summary" nillable="true" type="xsd:string"/>
+     <element name="title" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="findProductResponse">
+
+      <wsdl:part element="impl:findProductResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findProductRequest">
+
+      <wsdl:part element="impl:findProduct" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="Product">
+
+      <wsdl:operation name="findProduct">
+
+         <wsdl:input message="impl:findProductRequest" name="findProductRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findProductResponse" name="findProductResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="ProductSoapBinding" type="impl:Product">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="findProduct">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findProductRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findProductResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="ProductService">
+
+      <wsdl:port binding="impl:ProductSoapBinding" name="Product">
+
+         <wsdlsoap:address location="http://localhost:8080/apples-ecommerce-ws/services/Product"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
