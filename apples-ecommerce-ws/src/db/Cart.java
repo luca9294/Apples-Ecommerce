@@ -74,6 +74,16 @@ public class Cart implements interfaces.CartInt {
 		PreparedStatement preparedStatement;
 		Connection connection = ConnectionManager.connect();
 		try {
+			
+			if(quantity == 0) {
+				preparedStatement = connection.prepareStatement("DELETE FROM cart WHERE product_id = ? ");
+				preparedStatement.setInt(1, product_id);
+				
+				preparedStatement.executeUpdate(); 
+		        connection.close();
+
+
+			}
 			preparedStatement = connection.prepareStatement(
 					"UPDATE cart SET quantity = quantity + ?"+
 							"WHERE product_id = ? "
