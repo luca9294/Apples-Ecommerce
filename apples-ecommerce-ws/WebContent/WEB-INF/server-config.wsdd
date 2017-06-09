@@ -169,22 +169,27 @@
   <ns1:parameter name="wsdlServiceElement" value="LoginServiceService"/>
  </ns1:service>
  <ns1:service name="Cart" provider="java:RPC" style="wrapped" use="literal">
-  <ns1:operation name="addCartEntry" qname="ns30:addCartEntry" returnQName="ns30:addCartEntryReturn" returnType="xsd:boolean" soapAction="" xmlns:ns30="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns30:co" type="ns31:CartEntryObject" xmlns:ns31="http://Serializables"/>
+  <ns1:operation name="getGUUID" qname="ns30:getGUUID" returnQName="ns30:getGUUIDReturn" returnType="xsd:string" soapAction="" xmlns:ns30="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="addCartEntry" qname="ns31:addCartEntry" returnQName="ns31:addCartEntryReturn" returnType="xsd:boolean" soapAction="" xmlns:ns31="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns31:co" type="ns32:CartEntryObject" xmlns:ns32="http://Serializables"/>
   </ns1:operation>
-  <ns1:operation name="getGUUID" qname="ns32:getGUUID" returnQName="ns32:getGUUIDReturn" returnType="xsd:string" soapAction="" xmlns:ns32="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
-  <ns1:operation name="getCartContent" qname="ns33:getCartContent" returnQName="ns33:getCartContentReturn" returnType="ns34:CartEntryObject" soapAction="" xmlns:ns33="http://db" xmlns:ns34="http://Serializables">
-   <ns1:parameter qname="ns33:cart_id" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  <ns1:operation name="updateCart" qname="ns33:updateCart" returnQName="ns33:updateCartReturn" returnType="xsd:boolean" soapAction="" xmlns:ns33="http://db" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns33:cart_id" type="xsd:int"/>
+   <ns1:parameter qname="ns33:product_id" type="xsd:int"/>
+   <ns1:parameter qname="ns33:quantity" type="xsd:int"/>
   </ns1:operation>
-  <ns1:parameter name="allowedMethods" value="addCartEntry getGUUID getCartContent"/>
-  <ns1:parameter name="wsdlPortType" value="Cart"/>
+  <ns1:operation name="getCartContent" qname="ns34:getCartContent" returnQName="ns34:getCartContentReturn" returnType="ns35:CartEntryObject" soapAction="" xmlns:ns34="http://db" xmlns:ns35="http://Serializables">
+   <ns1:parameter qname="ns34:cart_id" type="xsd:int" xmlns:xsd="http://www.w3.org/2001/XMLSchema"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="addCartEntry getGUUID updateCart getCartContent"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
-  <ns1:parameter name="schemaQualified" value="http://Serializables,http://db"/>
-  <ns1:parameter name="wsdlServicePort" value="Cart"/>
+  <ns1:parameter name="wsdlPortType" value="Cart"/>
   <ns1:parameter name="className" value="db.Cart"/>
+  <ns1:parameter name="wsdlServicePort" value="Cart"/>
+  <ns1:parameter name="schemaQualified" value="http://Serializables,http://db"/>
   <ns1:parameter name="wsdlTargetNamespace" value="http://db"/>
   <ns1:parameter name="wsdlServiceElement" value="CartService"/>
-  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns35:CartEntryObject" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:Serializables.CartEntryObject" xmlns:ns35="http://Serializables"/>
+  <ns1:typeMapping deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle="" qname="ns36:CartEntryObject" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" type="java:Serializables.CartEntryObject" xmlns:ns36="http://Serializables"/>
  </ns1:service>
  <ns1:transport name="http">
   <ns1:requestFlow>

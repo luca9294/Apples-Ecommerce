@@ -63,7 +63,8 @@ public class Cart implements interfaces.CartInt {
 		}
 		return result;
 	}
-
+	
+	
 	/**
 	 * Updates the quantity of the specified product
 	 * @param product_id
@@ -104,8 +105,51 @@ public class Cart implements interfaces.CartInt {
 
 		return result;
 	}
+    
+    
+	
+    @Override
+	/**
+	 * Updates the quantity of the specified product
+	 * @param product_id
+	 */
+	public boolean updateCart(int cart_id,int product_id, int quantity){
+	
+		boolean result = false;
+		PreparedStatement preparedStatement;
+		Connection connection = ConnectionManager.connect();
+		try {
+			
+			if(quantity == 0) {
+				preparedStatement = connection.prepareStatement("DELETE FROM cart WHERE product_id = ? ");
+				preparedStatement.setInt(1, product_id);
+				
+				preparedStatement.executeUpdate(); 
+		        connection.close();
 
 
+			}
+			else{
+			preparedStatement = connection.prepareStatement(
+					"UPDATE cart SET quantity = ?"+
+							"WHERE product_id = ? "
+							+ "and cart_id = ?" );
+
+			preparedStatement.setInt(1, quantity);
+			preparedStatement.setInt(2, product_id);
+			preparedStatement.setInt(3, cart_id);
+			preparedStatement.executeUpdate();
+
+			preparedStatement.close();}
+			result = true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			ConnectionManager.close(connection);
+		}
+
+		return result;
+	}
 
 	/**
 	 * Add a new product to the chart

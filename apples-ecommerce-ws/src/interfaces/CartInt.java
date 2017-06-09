@@ -33,4 +33,14 @@ public interface CartInt {
 	 * @return
 	 */
 	public String getGUUID();
+	
+	 @WebMethod
+	/**
+	 * Updated the content of the specified cart
+	 * @param cart_id
+	 * @return
+	 */
+	public boolean updateCart(int cart_id,int product_id, int quantity);
+	
+	
 }
