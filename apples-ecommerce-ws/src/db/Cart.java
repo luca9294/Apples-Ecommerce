@@ -20,7 +20,6 @@ public class Cart implements interfaces.CartInt {
 		boolean result = false; 
 		
 		if(this.checkExistance(co.getCartId(), co.getProductId())){
-
 			result = this.updateProductQuantity(co.getCartId(), co.getProductId(), co.getQuantity());
 		}
 		else {
