@@ -9,10 +9,12 @@ import javax.jws.WebService;
 
 import Serializables.CardObject;
 import connection.ConnectionManager;
+import helper.CustomerUtilities;
 import interfaces.CardInt;
 
 @WebService(endpointInterface = "interfaces.CardInt") 
 public class Card implements CardInt {
+	private String[] keys;
 
 	@Override
 	public boolean AddCard(CardObject co) {
@@ -80,5 +82,12 @@ public class Card implements CardInt {
 	 return result;
 
 	}
+
+	@Override
+	public String getPublicKey() {
+		keys = CustomerUtilities.getKeys();
+		return keys[0];
+	}
+
 
 }

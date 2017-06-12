@@ -24,4 +24,12 @@ public interface CardInt {
 	 * @return
 	 */
 	public CardObject[] getCards(int customer_id);
+	
+	@WebMethod
+	/**
+	 * Get new public key
+	 * @param co
+	 * @return
+	 */
+	public String getPublicKey();
 }
