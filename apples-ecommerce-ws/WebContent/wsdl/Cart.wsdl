@@ -15,20 +15,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="addCartEntry">
-    <complexType>
-     <sequence>
-      <element name="co" type="tns1:CartEntryObject"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="addCartEntryResponse">
-    <complexType>
-     <sequence>
-      <element name="addCartEntryReturn" type="xsd:boolean"/>
-     </sequence>
-    </complexType>
-   </element>
    <element name="updateCart">
     <complexType>
      <sequence>
@@ -42,6 +28,20 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
     <complexType>
      <sequence>
       <element name="updateCartReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addCartEntry">
+    <complexType>
+     <sequence>
+      <element name="co" type="tns1:CartEntryObject"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addCartEntryResponse">
+    <complexType>
+     <sequence>
+      <element name="addCartEntryReturn" type="xsd:boolean"/>
      </sequence>
     </complexType>
    </element>
@@ -150,18 +150,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="addCartEntry">
-
-         <wsdl:input message="impl:addCartEntryRequest" name="addCartEntryRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:addCartEntryResponse" name="addCartEntryResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="updateCart">
 
          <wsdl:input message="impl:updateCartRequest" name="updateCartRequest">
@@ -169,6 +157,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
        </wsdl:input>
 
          <wsdl:output message="impl:updateCartResponse" name="updateCartResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addCartEntry">
+
+         <wsdl:input message="impl:addCartEntryRequest" name="addCartEntryRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:addCartEntryResponse" name="addCartEntryResponse">
 
        </wsdl:output>
 
@@ -210,24 +210,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="addCartEntry">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="addCartEntryRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="addCartEntryResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="updateCart">
 
          <wsdlsoap:operation soapAction=""/>
@@ -239,6 +221,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="updateCartResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="addCartEntry">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addCartEntryRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addCartEntryResponse">
 
             <wsdlsoap:body use="literal"/>
 

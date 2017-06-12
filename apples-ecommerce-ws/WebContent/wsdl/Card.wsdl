@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://db" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://db" xmlns:intf="http://db" xmlns:tns1="http://Serializables" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://db" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://Serializables"/>
+   <element name="getPublicKey">
+    <complexType/>
+   </element>
+   <element name="getPublicKeyResponse">
+    <complexType>
+     <sequence>
+      <element name="getPublicKeyReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="AddCard">
+    <complexType>
+     <sequence>
+      <element name="co" type="tns1:CardObject"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="AddCardResponse">
+    <complexType>
+     <sequence>
+      <element name="AddCardReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getCards">
+    <complexType>
+     <sequence>
+      <element name="customer_id" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getCardsResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getCardsReturn" type="tns1:CardObject"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://Serializables" xmlns="http://www.w3.org/2001/XMLSchema">
+   <complexType name="CardObject">
+    <sequence>
+     <element name="cName" nillable="true" type="xsd:string"/>
+     <element name="customerId" type="xsd:int"/>
+     <element name="expMonth" type="xsd:int"/>
+     <element name="expYear" type="xsd:int"/>
+     <element name="key" nillable="true" type="xsd:string"/>
+     <element name="lastChats" type="xsd:int"/>
+     <element name="number" nillable="true" type="xsd:string"/>
+     <element name="vvc" nillable="true" type="xsd:string"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="AddCardResponse">
+
+      <wsdl:part element="impl:AddCardResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCardsResponse">
+
+      <wsdl:part element="impl:getCardsResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPublicKeyRequest">
+
+      <wsdl:part element="impl:getPublicKey" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getCardsRequest">
+
+      <wsdl:part element="impl:getCards" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="AddCardRequest">
+
+      <wsdl:part element="impl:AddCard" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getPublicKeyResponse">
+
+      <wsdl:part element="impl:getPublicKeyResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="Card">
+
+      <wsdl:operation name="getPublicKey">
+
+         <wsdl:input message="impl:getPublicKeyRequest" name="getPublicKeyRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getPublicKeyResponse" name="getPublicKeyResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="AddCard">
+
+         <wsdl:input message="impl:AddCardRequest" name="AddCardRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:AddCardResponse" name="AddCardResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCards">
+
+         <wsdl:input message="impl:getCardsRequest" name="getCardsRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getCardsResponse" name="getCardsResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="CardSoapBinding" type="impl:Card">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="getPublicKey">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getPublicKeyRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getPublicKeyResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="AddCard">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="AddCardRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="AddCardResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getCards">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getCardsRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getCardsResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="CardService">
+
+      <wsdl:port binding="impl:CardSoapBinding" name="Card">
+
+         <wsdlsoap:address location="http://localhost:8080/apples-ecommerce-ws/services/Card"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
