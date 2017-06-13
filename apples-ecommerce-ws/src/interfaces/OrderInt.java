@@ -39,6 +39,13 @@ public interface OrderInt {
 	 */
 	public OrderObject[] getOrders(int customer_id);
 	
+		@WebMethod
+	/**
+	 * Return a new GUUID
+	 * @return
+	 */
+	public String getGUUID();
+	
 	
 	
 	
