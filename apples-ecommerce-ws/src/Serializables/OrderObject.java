@@ -17,8 +17,6 @@ public class OrderObject {
 	private int status;
 	@XmlElement(name = "customer_id")
 	private int customer_id;
-	@XmlElement(name = "order_id")
-	private int order_id;
   //private OrderEntries[]
 
 	public OrderObject() {
@@ -29,7 +27,7 @@ public class OrderObject {
 		this.total = total;
 		this.payment = payment;
 		this.status = status;
-		this.order_id = order_id
+		this.order_id = order_id;
 	}
 
 	public int getCustomerId() {
@@ -51,5 +49,5 @@ public class OrderObject {
 	public int getStatus() {
 		return status;
 	}
-
+}
 

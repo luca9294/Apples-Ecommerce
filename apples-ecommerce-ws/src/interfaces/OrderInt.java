@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
 
+import Serializables.OrderObject;
+
 @WebService
 public interface OrderInt {
 	
@@ -13,7 +15,7 @@ public interface OrderInt {
 	 * @param cart_id, customer_id
 	 * @return
 	 */
-	public boolean addOrder (int cart_id, int customer_id);
+	public boolean addOrder (int order_id, int cart_id, int customer_id, int lastChars);
 
 	@WebMethod
 	/**

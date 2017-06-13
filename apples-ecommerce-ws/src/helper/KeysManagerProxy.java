@@ -44,16 +44,22 @@ public class KeysManagerProxy implements helper.KeysManager {
     return keysManager;
   }
   
+  public boolean updatePrivateKey(java.lang.String customerId, java.lang.String privateKey) throws java.rmi.RemoteException{
+    if (keysManager == null)
+      _initKeysManagerProxy();
+    return keysManager.updatePrivateKey(customerId, privateKey);
+  }
+  
   public java.lang.String getPrivatekey(java.lang.String customerId) throws java.rmi.RemoteException{
     if (keysManager == null)
       _initKeysManagerProxy();
     return keysManager.getPrivatekey(customerId);
   }
   
-  public boolean updatePrivateKey(java.lang.String customerId, java.lang.String privateKey) throws java.rmi.RemoteException{
+  public boolean insertCCNewKey(java.lang.String customerId, java.lang.String privateKey) throws java.rmi.RemoteException{
     if (keysManager == null)
       _initKeysManagerProxy();
-    return keysManager.updatePrivateKey(customerId, privateKey);
+    return keysManager.insertCCNewKey(customerId, privateKey);
   }
   
   public boolean insertNewKey(java.lang.String customerId, java.lang.String privateKey) throws java.rmi.RemoteException{

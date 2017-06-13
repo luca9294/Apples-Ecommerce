@@ -1,5 +1,6 @@
 package db;
 
+import java.rmi.RemoteException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -10,6 +11,7 @@ import javax.jws.WebService;
 import Serializables.CardObject;
 import connection.ConnectionManager;
 import helper.CustomerUtilities;
+import helper.KeysManagerProxy;
 import interfaces.CardInt;
 
 @WebService(endpointInterface = "interfaces.CardInt") 
@@ -24,8 +26,8 @@ public class Card implements CardInt {
 		try {
 			connection.setAutoCommit(false);
 			preparedStatement = connection.prepareStatement(
-					"INSERT INTO card (cname, key, number, vvc,month,year,customer_id,lastChars)" +
-					"VALUES (?, ?, ?, ?,?,?,?,?)");
+					"INSERT INTO card (cname, key, number, vvc,month,year,customer_id,last)" +
+					"VALUES (?,?,?,?,?,?,?,?)");
 			preparedStatement.setString(1, co.getcName());
 			preparedStatement.setString(2, co.getKey());
 			preparedStatement.setString(3, co.getNumber());
@@ -39,9 +41,14 @@ public class Card implements CardInt {
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 			connection.setAutoCommit(true);
+			KeysManagerProxy kmp = new KeysManagerProxy();
+			kmp.insertCCNewKey(co.getCustomerId()+"", keys[1]);
 			result = true;
 
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			ConnectionManager.close(connection);
@@ -63,16 +70,17 @@ public class Card implements CardInt {
 			preparedStatement.setInt(1, customer_id);
 			//Retrieve the result of RETURNING statement to get the current id.
 			rs = preparedStatement.executeQuery();
-			preparedStatement.close();
-			connection.setAutoCommit(true);
+	
 			int count = 0;
 			while (rs.next()){
 				CardObject co = new CardObject(customer_id,Integer.parseInt(rs.getString("month")), Integer.parseInt(rs.getString("year")),rs.getString("key"), 
-						rs.getString("number"), rs.getString("vvc"),rs.getString("cname") ,Integer.parseInt( rs.getString("lastChars")));
+						rs.getString("number"), rs.getString("vvc"),rs.getString("cname") ,Integer.parseInt( rs.getString("last")));
 			   result[count] = co;
+			   count++;
 			}
-			
-			
+
+			connection.setAutoCommit(true);
+			preparedStatement.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

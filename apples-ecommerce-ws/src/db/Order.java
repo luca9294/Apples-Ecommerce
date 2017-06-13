@@ -6,7 +6,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.UUID;
 import javax.jws.WebService;
-import Serializales.OrderObject
+
+import Serializables.OrderObject;
 import connection.ConnectionManager;
 
 @WebService(endpointInterface = "interfaces.OrderInt")
@@ -27,23 +28,23 @@ public class Order implements interfaces.OrderInt {
 			connection = ConnectionManager.connect();
 			connection.setAutoCommit(false);
 			preparedStatement = connection.prepareStatement(
-		  "INSERT order (order_id,customer_id, payment_id, product_id, quantity, status)
-		  SELECT ?, ?, ?, product_id, quantity, ?
-		  FROM cart WHERE cart_id = ?");
-		  preparedStatement.setInt(1, order_id);
+		  "INSERT order (order_id,customer_id, payment_id, product_id, quantity, status)"
+		  + " SELECT ?, ?, ?, product_id, quantity, ?"
+		  + "FROM cart WHERE cart_id = ?");
+		    preparedStatement.setInt(1, order_id);
 			preparedStatement.setInt(2, customer_id);
 			preparedStatement.setInt(3, lastChars);
 			preparedStatement.setInt(4, 1);
 			preparedStatement.setInt(5, cart_id);
-			resultSet = preparedStatement.executeUpdate();
+			preparedStatement.executeUpdate();
 			connection.close();
 
-      connection = ConnectionManager.connect();
+			connection = ConnectionManager.connect();
 			connection.setAutoCommit(false);
 			preparedStatement = connection.prepareStatement(
-		  "DELETE FROM order WHERE cart_id = ?");
+		    "DELETE FROM order WHERE cart_id = ?");
 			preparedStatement.setInt(1, cart_id);
-			resultSet = preparedStatement.executeUpdate();
+			preparedStatement.executeUpdate();
 			connection.close();
 			}
 		catch (SQLException e) {
@@ -69,10 +70,9 @@ public class Order implements interfaces.OrderInt {
     try {
 			connection = ConnectionManager.connect();
 			connection.setAutoCommit(false);
-			preparedStatement = connection.prepareStatement(
-		  "DELETE FROM order WHERE order_id = ?";
+			preparedStatement = connection.prepareStatement("DELETE FROM order WHERE order_id = ?");
 			preparedStatement.setInt(1, order_id);
-			resultSet = preparedStatement.executeUpdate();
+			preparedStatement.executeUpdate();
 			connection.close();
 			}
 		catch (SQLException e) {
@@ -91,7 +91,7 @@ public class Order implements interfaces.OrderInt {
 	 * @return
 	 */
 	@Override
-	public boolean getOrders(int customer_id){
+	public  OrderObject[] getOrders(int customer_id){
     OrderObject[] a = new OrderObject[1000];
 		ResultSet resultSet;
 		PreparedStatement preparedStatement;
@@ -106,8 +106,7 @@ public class Order implements interfaces.OrderInt {
 			resultSet = preparedStatement.executeQuery();
 			int index=0;
 			while(resultSet.next()) {				
-			  int customer_id, int total, String payment, int status, int order_id
-				OrderObject o = new OrderObject(resultSet.getInt("customer_id"),getTotal(resultSet.getInt("order_id")),resultSet.getInt("payment_id"),resultSet.getInt("status"),resultSet.getInt("order_id"));
+				OrderObject o = new OrderObject(resultSet.getInt("customer_id"),getTotal(resultSet.getInt("order_id")),resultSet.getInt("payment_id")+"",resultSet.getInt("status"),resultSet.getInt("order_id"));				
 				a[index]=o;
 				index++;
 			}
@@ -135,17 +134,15 @@ public class Order implements interfaces.OrderInt {
 		try {
 			connection.setAutoCommit(false);
 			preparedStatement = connection.prepareStatement(
-			"SELECT * FROM order WHERE order_id = ? 
-			JOIN  products ON order.product_id = products.product_id
-			");
+			"SELECT * FROM order WHERE order_id = ? " +
+			"JOIN  products ON order.product_id = products.product_id");
 			preparedStatement.setInt(1, order_id);
 
 			// Retrieve the result of RETURNING statement to get the current id.
 			resultSet = preparedStatement.executeQuery();
-			int index=0;
 			while(resultSet.next()) {				
 			  int quantity = resultSet.getInt("quantity"); 
-			  int price   = resulSet.getInt("price");
+			  int price   =   resultSet.getInt("price");
 			  int mult = quantity * price;
 			  total += mult;
 			}
@@ -158,9 +155,18 @@ public class Order implements interfaces.OrderInt {
 		}
 		  return total;
 		}
-	  }
+	  
+	
 	@Override
 	public String getGUUID() {
 		int randomNum = (int) (Math.pow(10, 8) + (Math.random() * (Math.pow(10, 6)-1)));
 		return (randomNum + "");
 	}
+
+	@Override
+	public boolean changeOrderStatus(int order_id, int newStatus) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+}

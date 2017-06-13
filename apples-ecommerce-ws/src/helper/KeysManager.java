@@ -8,7 +8,8 @@
 package helper;
 
 public interface KeysManager extends java.rmi.Remote {
-    public java.lang.String getPrivatekey(java.lang.String customerId) throws java.rmi.RemoteException;
     public boolean updatePrivateKey(java.lang.String customerId, java.lang.String privateKey) throws java.rmi.RemoteException;
+    public java.lang.String getPrivatekey(java.lang.String customerId) throws java.rmi.RemoteException;
+    public boolean insertCCNewKey(java.lang.String customerId, java.lang.String privateKey) throws java.rmi.RemoteException;
     public boolean insertNewKey(java.lang.String customerId, java.lang.String privateKey) throws java.rmi.RemoteException;
 }
