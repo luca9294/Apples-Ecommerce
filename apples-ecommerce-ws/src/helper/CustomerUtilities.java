@@ -141,7 +141,7 @@ public class CustomerUtilities {
 			}
 	    		return true;
 	}
-  	
+  	/*
   	public static CustomerObject updateCustomerKeys(CustomerObject oldCustomerObject, String encryptedPassword) {
   		CustomerObject customer = oldCustomerObject;
   		String pk = "";
@@ -171,5 +171,7 @@ public class CustomerUtilities {
 			customer = null;
 			return customer;
 		}
-  	}
+		
+		*/
+  	
 }

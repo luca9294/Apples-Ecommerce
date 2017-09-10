@@ -19,121 +19,115 @@ public class CustomerObject  {
 
 	@XmlElement(name = "customer_id")
 	private int customer_id;
-	@XmlElement(name = "salutation")
-	private String salutation;
 	@XmlElement(name = "firstname")
 	private String firstname;
 	@XmlElement(name = "lastname")
 	private String lastname;
-	@XmlElement(name = "company")
-	private String company;
-	@XmlElement(name = "country")
-	private String country;
-	@XmlElement(name = "province")
-	private String province;
 	@XmlElement(name = "city")
 	private String city;
-	@XmlElement(name = "street")
-	private String street;
-	@XmlElement(name = "streetNo")
-	private String streetNo;
+	@XmlElement(name = "address")
+	private String address;
 	@XmlElement(name = "zip")
 	private String zip;
 	@XmlElement(name = "email")
 	private String email;
-	@XmlElement(name = "pwd")
-	private String pwd;
-	@XmlElement(name = "key")
-	private String key;
+	@XmlElement(name = "organization")
+	private String organization;
 	
 	
 
 	public CustomerObject(){}
 	
 	
-	public CustomerObject(int customer_id, String salutation, String name,
-			String surname, String country, String province,
-			String city, String street, String streetNo, String zip, String email, String pwd, String key) {
+	public CustomerObject(String firstname,
+			String lastname, String email, int phoneNumber, String organization,
+			String city, String address, String zip) {
 		this.customer_id = customer_id;
-		this.firstname = name;
-		this.lastname = surname;
-		this.salutation = salutation;
-		this.country = country;
-		this.province = province;
+		this.firstname = firstname;
+		this.lastname = lastname;
 		this.city = city;
-		this.street = street;
-		this.streetNo = streetNo;
+		this.address = address;
 		this.zip = zip;
 		this.email = email;
-		this.pwd = pwd;
-		this.key = key;
+		this.organization = organization;
 	}
 
 	public int getId() {
 		return customer_id;
 	}
 
+
+	public void setCustomer_id(int customer_id) {
+		this.customer_id = customer_id;
+	}
+
+
 	public String getFirstname() {
 		return firstname;
 	}
+
+
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
+	}
+
 
 	public String getLastname() {
 		return lastname;
 	}
 
-	public String getSalutation() {
-		return salutation;
+
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
 	}
 
-	public String getTitle() {
-		return email;
-	}
-
-	public String getCompany() {
-		return company;
-	}
-
-	public String getCountry() {
-		return country;
-	}
-
-	public String getProvince() {
-		return province;
-	}
 
 	public String getCity() {
 		return city;
 	}
 
-	public String getStreet() {
-		return street;
-	}
-	
-	public String getPwd() {
-		return pwd;
+
+	public void setCity(String city) {
+		this.city = city;
 	}
 
-	public String getStreetNo() {
-		return streetNo;
+
+	public String getAddress() {
+		return address;
 	}
+
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 
 	public String getZip() {
 		return zip;
 	}
-	
-	public String getKey() {
-		return key;
-	}
-	
-	public boolean isPwdMatching(String pwd) {
-		return pwd.equals(this.pwd);
+
+
+	public void setZip(String zip) {
+		this.zip = zip;
 	}
 
-	@Override
-	public String toString() {
-		return "Customer: " + salutation + ", " + email + ", " + firstname +
-				", " + lastname + ", " + country + ", " +
-				province + ", " + city + ", " + street + ", " + streetNo +
-				", " + zip;
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public String getOrganization() {
+		return organization;
+	}
+
+
+	public void setOrganization(String organization) {
+		this.organization = organization;
 	}
 }

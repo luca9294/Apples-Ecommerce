@@ -10,10 +10,9 @@ import Serializables.CustomerObject;
 @WebService
 public interface LoginServiceInt {
 	@WebMethod
-	public boolean createNewUser(String salutation, String name,
-			String surename, String country, String province,
-			String city, String street,	String streetNo, String zip, int customer_id,
-			String email, String pwd
+	public boolean createNewUser(String name,
+			String surename, String email, int phoneNumber, String organization,
+			String city, String address, String zip			
 			);
 	@WebMethod
 	public String getError();

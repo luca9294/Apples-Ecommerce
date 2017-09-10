@@ -19,46 +19,35 @@ public class LoginService implements interfaces.LoginServiceInt {
 	private String[] keys;
 
 	@Override
-	public boolean createNewUser(String salutation, String name,
-			String surename, String country, String province,
-			String city, String street,	String streetNo, String zip, int customer_id,
-			String email, String pwd
+	public boolean createNewUser(String firstname,
+			String lastname, String email, int phoneNumber, String organization,
+			String city, String address, String zip		
 			) {
-		getCustomerByMail(email);
-		if (customer != null){
-			errorString = "There is already an user with that email! " + customer.getId();
-			return false;
-		}	
+
 		ResultSet resultSet;
 		PreparedStatement preparedStatement;
 		Connection connection = ConnectionManager.connect();
 		try {
 			connection.setAutoCommit(false);
 			preparedStatement = connection.prepareStatement(
-					"INSERT INTO customer (salutation, firstname, lastname, " +
-							"country, province, city, street, " +
-							"street_no, zip, email, pwd, key) " +
-							"VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) " +
+					"INSERT INTO customer (firstname, lastname,email, phoneNumber, organization " +
+							"city, address, zip" +
+							"VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
 					"RETURNING customer_id");
-			preparedStatement.setString(1, salutation);
-			preparedStatement.setString(2, name);
-			preparedStatement.setString(3, surename);
-			preparedStatement.setString(4, country);
-			preparedStatement.setString(5, province);
+			preparedStatement.setString(1, firstname);
+			preparedStatement.setString(2, lastname);
+			preparedStatement.setString(3, email);
+			preparedStatement.setInt(4, phoneNumber);
+			preparedStatement.setString(5, organization);
 			preparedStatement.setString(6, city);
-			preparedStatement.setString(7, street);
-			preparedStatement.setString(8, streetNo);
-			preparedStatement.setString(9, zip);
-			preparedStatement.setString(10, email);
-			preparedStatement.setString(11, pwd);
-			preparedStatement.setString(12, keys[0]);
+			preparedStatement.setString(7, address);
+			preparedStatement.setString(8, zip);
 			// Retrieve the result of RETURNING statement to get the current id.
 			resultSet = preparedStatement.executeQuery();
 			if (resultSet.next()) {				
-				customer = new CustomerObject(resultSet.getInt(1), salutation,
-						name, surename, country, province, city,
-						street, streetNo, zip,email,pwd, keys[0]);
-				connection.commit();					
+				customer = new CustomerObject(firstname, lastname, email, phoneNumber,organization, city,
+						address, zip);
+				connection.commit();			
 			}
 			else {
 				connection.rollback();
@@ -71,21 +60,9 @@ public class LoginService implements interfaces.LoginServiceInt {
 		} finally {
 			ConnectionManager.close(connection);
 		}
-
-		if (customer != null){
-			KeysManagerProxy kmp = new KeysManagerProxy();
-			try {
-				kmp.insertNewKey(customer.getId() + "", keys[1]);
-			} catch (RemoteException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			return true;
-		}
-		else
-			return false;
+		
+		return true;
 	}
-
 	//Check whether an user with that same email exists
 	private boolean existCookieID (String id) {
 		boolean result = false;
@@ -117,61 +94,12 @@ public class LoginService implements interfaces.LoginServiceInt {
 	}
 
 	//Check whether an user with that same email exists
-	private  void getCustomerByMail (String email) {
-		ResultSet resultSet;
-		PreparedStatement preparedStatement;
-		Connection connection = ConnectionManager.connect();
-		try {
-			connection.setAutoCommit(false);
-			preparedStatement = connection.prepareStatement(
-					"SELECT * FROM customer WHERE email = ?");
-			preparedStatement.setString(1, email);
-
-			// Retrieve the result of RETURNING statement to get the current id.
-			resultSet = preparedStatement.executeQuery();
-			if (resultSet.next()) {				
-				customer = new CustomerObject(resultSet.getInt(1), resultSet.getString(3),
-						resultSet.getString(4), resultSet.getString(2),
-						resultSet.getString(5), resultSet.getString(6),
-						resultSet.getString(7), resultSet.getString(8),
-						resultSet.getString(9), resultSet.getString(10),
-						resultSet.getString(12), resultSet.getString(13),resultSet.getString(10));
-			}
-			else
-				customer = null;
-
-			preparedStatement.close();
-			connection.setAutoCommit(true);
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			ConnectionManager.close(connection);
-		}
-	}
 
 	@Override
 	public String getError() {
 		return errorString;
 	}
 
-	//Returns -1 user does not exist. 0 pwd is wrong
-	@Override
-	public int login(String email, String pwd) {
-		getCustomerByMail(email);
-		//user does not exists
-		if  (customer == null)
-			return -1;
-		else 
-		{
-			customer = CustomerUtilities.updateCustomerKeys(customer, pwd);
-			if (customer != null) {
-				return customer.getId();
-			} else {
-				return 0;
-			}
-		}
-	}
-	
 	
 	public String getEncryptedString(String toEncrpy, String pbKey){
 		return CustomerUtilities.getEncryptedString(toEncrpy, pbKey);
@@ -370,5 +298,10 @@ public class LoginService implements interfaces.LoginServiceInt {
 				return false;
 			}
 	    		return true;
+	}
+	@Override
+	public int login(String email, String pwd) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 }

@@ -20,9 +20,12 @@ public class Customer implements CustomerInt {
 	public Customer(){};
 
     @Override
+    
 	public CustomerObject modify(String salutation, String name,
 			String surname, String country, String province,
 			String city, String street,	String streetNo, String zip, String email, String pwd){
+    	
+    	/*
 		CustomerObject customer = null;
 		ResultSet resultSet;
 		PreparedStatement preparedStatement;
@@ -57,6 +60,9 @@ public class Customer implements CustomerInt {
 			ConnectionManager.close(connection);
 		}
 		return customer;
+		
+		*/
+    	return null;
 	}	
 	
     @Override
@@ -81,13 +87,18 @@ public class Customer implements CustomerInt {
     @WebResult(name="CustomerObject")
     @Override 
 	public CustomerObject find(int id, String encryptedPassword) {
+    	/*
 		CustomerObject customer = findById(id);
 		return CustomerUtilities.updateCustomerKeys(customer, encryptedPassword);
+		*/
+    	
+    	return null;
 	}
     
     @WebResult(name="CustomerObject")
     @Override 
 	public CustomerObject findByCookie(int id, String cookieId) {
+    	/*
     	CustomerObject customer = null;
 		ResultSet resultSet;
 		PreparedStatement preparedStatement;
@@ -112,9 +123,15 @@ public class Customer implements CustomerInt {
 			ConnectionManager.close(connection);
 		}
 		return customer;
+		
+		*/
+    	
+    	return null;
    	}
     
     private CustomerObject findById(int id) {
+    	
+    	/*
     	CustomerObject customer = null;
 		ResultSet resultSet;
 		PreparedStatement preparedStatement;
@@ -139,5 +156,9 @@ public class Customer implements CustomerInt {
 			ConnectionManager.close(connection);
 		}
 		return customer;
+		
+		*/
+    	
+    	return null;
     }
 }
