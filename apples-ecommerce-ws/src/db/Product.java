@@ -28,7 +28,7 @@ public class Product implements ProductInt{
 			if(resultSet.next()) {				
 				po = new ProductObject(product_id, resultSet.getInt("category_id"), resultSet.getString("title"),
 						resultSet.getString("summary"), resultSet.getString("description"), resultSet.getInt("price"),
-						resultSet.getInt("price_type"), resultSet.getString("image_link"));
+						resultSet.getInt("price_type"), resultSet.getString("image_link"),  resultSet.getInt("quantity"));
 			}
 			preparedStatement.close();
 			connection.setAutoCommit(true);

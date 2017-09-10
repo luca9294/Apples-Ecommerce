@@ -24,6 +24,8 @@ public class ProductObject implements Serializable {
     private int price_type;
 	@XmlElement(name = "imgLink")
     private String imgLink;
+	@XmlElement(name = "quantity")
+    private int quantity;
     
     
     public ProductObject(){}
@@ -32,7 +34,7 @@ public class ProductObject implements Serializable {
     
 	public ProductObject(int product_id, int category_id, String title,
 			String summary, String description, int price,
-			int price_type, String imgLink ) {
+			int price_type, String imgLink, int quantity ) {
 		this.product_id = product_id;
 		this.category_id = category_id;
 		this.title = title;
@@ -41,6 +43,7 @@ public class ProductObject implements Serializable {
 		this.price = price;
 		this.price_type = price_type;
 		this.imgLink = imgLink;
+		this.quantity  = quantity;
 	}
 	
 	
@@ -80,5 +83,8 @@ public class ProductObject implements Serializable {
 	
 	public String getImgLink(){
 		return imgLink;
+	}
+	public int getQuantity(){
+		return quantity;
 	}
 }

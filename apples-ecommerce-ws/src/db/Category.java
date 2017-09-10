@@ -59,7 +59,7 @@ public class Category implements CategoryInt {
 			while (resultSet.next()) {				
 				ProductObject po = new ProductObject(resultSet.getInt("product_id"), cat_id, 
 						resultSet.getString("title"), resultSet.getString("summary"), 
-						resultSet.getString("description"), resultSet.getInt("price"), resultSet.getInt("price_type"), resultSet.getString("image_link"));
+						resultSet.getString("description"), resultSet.getInt("price"), resultSet.getInt("price_type"), resultSet.getString("image_link"), resultSet.getInt("quantity"));
 				list.add(po);
 			
 			}
