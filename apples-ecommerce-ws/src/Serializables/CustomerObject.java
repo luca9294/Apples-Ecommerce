@@ -42,7 +42,6 @@ public class CustomerObject  {
 	public CustomerObject(String firstname,
 			String lastname, String email, int phoneNumber, String organization,
 			String city, String address, String zip) {
-		this.customer_id = customer_id;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.city = city;
