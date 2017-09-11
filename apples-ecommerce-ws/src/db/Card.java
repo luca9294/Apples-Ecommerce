@@ -26,7 +26,7 @@ public class Card implements CardInt {
 		try {
 			connection.setAutoCommit(false);
 			preparedStatement = connection.prepareStatement(
-					"INSERT INTO card (cname, key, number, vvc,month,year,customer_id,last)" +
+					"INSERT INTO card (cname, key, number, vvc,month,year,email,last)" +
 					"VALUES (?,?,?,?,?,?,?,?)");
 			preparedStatement.setString(1, co.getcName());
 			preparedStatement.setString(2, co.getKey());
@@ -34,21 +34,16 @@ public class Card implements CardInt {
 			preparedStatement.setString(4, co.getVvc());
 			preparedStatement.setInt(5, co.getExpMonth());
 			preparedStatement.setInt(6, co.getExpYear());
-			preparedStatement.setInt(7, co.getCustomerId());
+			preparedStatement.setString(7, co.getEmail());
 			preparedStatement.setString(8, co.getLastChats()+"");
 			
 			// Retrieve the result of RETURNING statement to get the current id.
 			preparedStatement.executeUpdate();
 			preparedStatement.close();
 			connection.setAutoCommit(true);
-			KeysManagerProxy kmp = new KeysManagerProxy();
-			kmp.insertCCNewKey(co.getCustomerId()+"", keys[1]);
 			result = true;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (RemoteException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			ConnectionManager.close(connection);
@@ -58,7 +53,7 @@ public class Card implements CardInt {
 
 	@Override
 	public CardObject[] getCards(int customer_id) {
-		CardObject[] result = new CardObject[1000];
+		/*CardObject[] result = new CardObject[1000];
 		PreparedStatement preparedStatement;
 		ResultSet rs;
 		Connection connection = ConnectionManager.connect();
@@ -87,7 +82,8 @@ public class Card implements CardInt {
 			ConnectionManager.close(connection);
 		}
 
-	 return result;
+	 return result;*/
+		return null;
 
 	}
 

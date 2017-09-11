@@ -57,9 +57,6 @@ public class CustomerObject  {
 	}
 
 
-	public void setCustomer_id(int customer_id) {
-		this.customer_id = customer_id;
-	}
 
 
 	public String getFirstname() {
@@ -67,9 +64,7 @@ public class CustomerObject  {
 	}
 
 
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
-	}
+
 
 
 	public String getLastname() {
@@ -77,9 +72,6 @@ public class CustomerObject  {
 	}
 
 
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
-	}
 
 
 	public String getCity() {
@@ -87,9 +79,6 @@ public class CustomerObject  {
 	}
 
 
-	public void setCity(String city) {
-		this.city = city;
-	}
 
 
 	public String getAddress() {
@@ -97,9 +86,7 @@ public class CustomerObject  {
 	}
 
 
-	public void setAddress(String address) {
-		this.address = address;
-	}
+
 
 
 	public String getZip() {
@@ -107,9 +94,6 @@ public class CustomerObject  {
 	}
 
 
-	public void setZip(String zip) {
-		this.zip = zip;
-	}
 
 
 	public String getEmail() {
@@ -117,17 +101,10 @@ public class CustomerObject  {
 	}
 
 
-	public void setEmail(String email) {
-		this.email = email;
-	}
-
 
 	public String getOrganization() {
 		return organization;
 	}
 
 
-	public void setOrganization(String organization) {
-		this.organization = organization;
-	}
 }

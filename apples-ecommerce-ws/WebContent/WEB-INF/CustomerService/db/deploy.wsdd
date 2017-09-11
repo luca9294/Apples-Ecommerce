@@ -10,9 +10,6 @@
       <parameter name="className" value="db.Customer"/>
       <parameter name="wsdlPortType" value="Customer"/>
       <parameter name="typeMappingVersion" value="1.2"/>
-      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://Serializables" name="find" qname="operNS:find" returnQName="retNS:findReturn" returnType="rtns:CustomerObject" soapAction="">
-        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:id" type="tns:int"/>
-      </operation>
       <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="delete" qname="operNS:delete" returnQName="retNS:deleteReturn" returnType="rtns:boolean" soapAction="">
       </operation>
       <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://Serializables" name="modify" qname="operNS:modify" returnQName="retNS:modifyReturn" returnType="rtns:CustomerObject" soapAction="">
@@ -28,7 +25,14 @@
         <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:email" type="tns:string"/>
         <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:pwd" type="tns:string"/>
       </operation>
-      <parameter name="allowedMethods" value="modify find delete"/>
+      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://Serializables" name="findByCookie" qname="operNS:findByCookie" returnQName="retNS:findByCookieReturn" returnType="rtns:CustomerObject" soapAction="">
+        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:id" type="tns:int"/>
+        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:cookieId" type="tns:string"/>
+      </operation>
+      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="findByEmail" qname="operNS:findByEmail" returnQName="retNS:findByEmailReturn" returnType="rtns:int" soapAction="">
+        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:email" type="tns:string"/>
+      </operation>
+      <parameter name="allowedMethods" value="modify findByCookie findByEmail delete"/>
 
       <typeMapping xmlns:ns="http://Serializables" qname="ns:CustomerObject" type="java:Serializables.CustomerObject" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
   </service>

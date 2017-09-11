@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://db" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://db" xmlns:intf="http://db" xmlns:tns1="http://Serializables" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://db" xmlns="http://www.w3.org/2001/XMLSchema">
+   <import namespace="http://Serializables"/>
+   <element name="addOrder">
+    <complexType>
+     <sequence>
+      <element name="order_id" type="xsd:int"/>
+      <element name="cart_id" type="xsd:int"/>
+      <element name="customer_id" type="xsd:int"/>
+      <element name="lastChars" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="addOrderResponse">
+    <complexType>
+     <sequence>
+      <element name="addOrderReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getGUUID">
+    <complexType/>
+   </element>
+   <element name="getGUUIDResponse">
+    <complexType>
+     <sequence>
+      <element name="getGUUIDReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteOrder">
+    <complexType>
+     <sequence>
+      <element name="order_id" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteOrderResponse">
+    <complexType>
+     <sequence>
+      <element name="deleteOrderReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getOrders">
+    <complexType>
+     <sequence>
+      <element name="customer_id" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="getOrdersResponse">
+    <complexType>
+     <sequence>
+      <element maxOccurs="unbounded" name="getOrdersReturn" type="tns1:OrderObject"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="changeOrderStatus">
+    <complexType>
+     <sequence>
+      <element name="order_id" type="xsd:int"/>
+      <element name="newStatus" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="changeOrderStatusResponse">
+    <complexType>
+     <sequence>
+      <element name="changeOrderStatusReturn" type="xsd:boolean"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+  <schema elementFormDefault="qualified" targetNamespace="http://Serializables" xmlns="http://www.w3.org/2001/XMLSchema">
+   <complexType name="OrderObject">
+    <sequence>
+     <element name="customerId" type="xsd:int"/>
+     <element name="order_id" type="xsd:int"/>
+     <element name="payment" nillable="true" type="xsd:string"/>
+     <element name="status" type="xsd:int"/>
+     <element name="total" type="xsd:int"/>
+    </sequence>
+   </complexType>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="getGUUIDResponse">
+
+      <wsdl:part element="impl:getGUUIDResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteOrderRequest">
+
+      <wsdl:part element="impl:deleteOrder" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addOrderResponse">
+
+      <wsdl:part element="impl:addOrderResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="changeOrderStatusRequest">
+
+      <wsdl:part element="impl:changeOrderStatus" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getGUUIDRequest">
+
+      <wsdl:part element="impl:getGUUID" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="addOrderRequest">
+
+      <wsdl:part element="impl:addOrder" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getOrdersRequest">
+
+      <wsdl:part element="impl:getOrders" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="changeOrderStatusResponse">
+
+      <wsdl:part element="impl:changeOrderStatusResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="deleteOrderResponse">
+
+      <wsdl:part element="impl:deleteOrderResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="getOrdersResponse">
+
+      <wsdl:part element="impl:getOrdersResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="Order">
+
+      <wsdl:operation name="addOrder">
+
+         <wsdl:input message="impl:addOrderRequest" name="addOrderRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:addOrderResponse" name="addOrderResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getGUUID">
+
+         <wsdl:input message="impl:getGUUIDRequest" name="getGUUIDRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getGUUIDResponse" name="getGUUIDResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteOrder">
+
+         <wsdl:input message="impl:deleteOrderRequest" name="deleteOrderRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:deleteOrderResponse" name="deleteOrderResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getOrders">
+
+         <wsdl:input message="impl:getOrdersRequest" name="getOrdersRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:getOrdersResponse" name="getOrdersResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="changeOrderStatus">
+
+         <wsdl:input message="impl:changeOrderStatusRequest" name="changeOrderStatusRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:changeOrderStatusResponse" name="changeOrderStatusResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="OrderSoapBinding" type="impl:Order">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="addOrder">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="addOrderRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="addOrderResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getGUUID">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getGUUIDRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getGUUIDResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteOrder">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="deleteOrderRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="deleteOrderResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="getOrders">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="getOrdersRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="getOrdersResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="changeOrderStatus">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="changeOrderStatusRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="changeOrderStatusResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="OrderService">
+
+      <wsdl:port binding="impl:OrderSoapBinding" name="Order">
+
+         <wsdlsoap:address location="http://localhost:8081/apples-ecommerce-ws/services/Order"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>

@@ -48,7 +48,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <complexType name="CardObject">
     <sequence>
      <element name="cName" nillable="true" type="xsd:string"/>
-     <element name="customerId" type="xsd:int"/>
+     <element name="email" nillable="true" type="xsd:string"/>
      <element name="expMonth" type="xsd:int"/>
      <element name="expYear" type="xsd:int"/>
      <element name="key" nillable="true" type="xsd:string"/>
@@ -212,7 +212,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       <wsdl:port binding="impl:CardSoapBinding" name="Card">
 
-         <wsdlsoap:address location="http://localhost:8080/apples-ecommerce-ws/services/Card"/>
+         <wsdlsoap:address location="http://localhost:8081/apples-ecommerce-ws/services/Card"/>
 
       </wsdl:port>
 

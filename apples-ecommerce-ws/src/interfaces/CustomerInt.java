@@ -16,7 +16,7 @@ public interface CustomerInt {
 	public boolean delete();
 	
 	@WebMethod
-	public CustomerObject find(int id, String encrpytedPassword);
+	public int findByEmail(String email);
 	
 	@WebMethod
 	public CustomerObject findByCookie(int id, String cookieId);

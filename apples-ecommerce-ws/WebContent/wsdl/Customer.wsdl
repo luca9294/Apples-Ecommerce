@@ -5,20 +5,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
  <wsdl:types>
   <schema elementFormDefault="qualified" targetNamespace="http://db" xmlns="http://www.w3.org/2001/XMLSchema">
    <import namespace="http://Serializables"/>
-   <element name="find">
-    <complexType>
-     <sequence>
-      <element name="id" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="findResponse">
-    <complexType>
-     <sequence>
-      <element name="findReturn" type="tns1:CustomerObject"/>
-     </sequence>
-    </complexType>
-   </element>
    <element name="delete">
     <complexType/>
    </element>
@@ -53,23 +39,46 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
+   <element name="findByCookie">
+    <complexType>
+     <sequence>
+      <element name="id" type="xsd:int"/>
+      <element name="cookieId" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="findByCookieResponse">
+    <complexType>
+     <sequence>
+      <element name="findByCookieReturn" type="tns1:CustomerObject"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="findByEmail">
+    <complexType>
+     <sequence>
+      <element name="email" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="findByEmailResponse">
+    <complexType>
+     <sequence>
+      <element name="findByEmailReturn" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
   </schema>
   <schema elementFormDefault="qualified" targetNamespace="http://Serializables" xmlns="http://www.w3.org/2001/XMLSchema">
    <complexType name="CustomerObject">
     <sequence>
+     <element name="address" nillable="true" type="xsd:string"/>
      <element name="city" nillable="true" type="xsd:string"/>
-     <element name="company" nillable="true" type="xsd:string"/>
-     <element name="country" nillable="true" type="xsd:string"/>
+     <element name="email" nillable="true" type="xsd:string"/>
      <element name="firstname" nillable="true" type="xsd:string"/>
      <element name="id" type="xsd:int"/>
-     <element name="key" nillable="true" type="xsd:string"/>
      <element name="lastname" nillable="true" type="xsd:string"/>
-     <element name="province" nillable="true" type="xsd:string"/>
-     <element name="pwd" nillable="true" type="xsd:string"/>
-     <element name="salutation" nillable="true" type="xsd:string"/>
-     <element name="street" nillable="true" type="xsd:string"/>
-     <element name="streetNo" nillable="true" type="xsd:string"/>
-     <element name="title" nillable="true" type="xsd:string"/>
+     <element name="organization" nillable="true" type="xsd:string"/>
      <element name="zip" nillable="true" type="xsd:string"/>
     </sequence>
    </complexType>
@@ -84,9 +93,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="findResponse">
+   <wsdl:message name="findByEmailResponse">
 
-      <wsdl:part element="impl:findResponse" name="parameters">
+      <wsdl:part element="impl:findByEmailResponse" name="parameters">
 
       </wsdl:part>
 
@@ -100,6 +109,22 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="findByEmailRequest">
+
+      <wsdl:part element="impl:findByEmail" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="findByCookieRequest">
+
+      <wsdl:part element="impl:findByCookie" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="modifyResponse">
 
       <wsdl:part element="impl:modifyResponse" name="parameters">
@@ -108,9 +133,9 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
-   <wsdl:message name="findRequest">
+   <wsdl:message name="findByCookieResponse">
 
-      <wsdl:part element="impl:find" name="parameters">
+      <wsdl:part element="impl:findByCookieResponse" name="parameters">
 
       </wsdl:part>
 
@@ -125,18 +150,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    </wsdl:message>
 
    <wsdl:portType name="Customer">
-
-      <wsdl:operation name="find">
-
-         <wsdl:input message="impl:findRequest" name="findRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:findResponse" name="findResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
 
       <wsdl:operation name="delete">
 
@@ -162,29 +175,35 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
+      <wsdl:operation name="findByCookie">
+
+         <wsdl:input message="impl:findByCookieRequest" name="findByCookieRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findByCookieResponse" name="findByCookieResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findByEmail">
+
+         <wsdl:input message="impl:findByEmailRequest" name="findByEmailRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:findByEmailResponse" name="findByEmailResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
    </wsdl:portType>
 
    <wsdl:binding name="CustomerSoapBinding" type="impl:Customer">
 
       <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
-
-      <wsdl:operation name="find">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="findRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="findResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
 
       <wsdl:operation name="delete">
 
@@ -222,13 +241,49 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
+      <wsdl:operation name="findByCookie">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findByCookieRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findByCookieResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="findByEmail">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="findByEmailRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="findByEmailResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
    </wsdl:binding>
 
    <wsdl:service name="CustomerService">
 
       <wsdl:port binding="impl:CustomerSoapBinding" name="Customer">
 
-         <wsdlsoap:address location="http://localhost:8080/apples-ecommerce-ws/services/Customer"/>
+         <wsdlsoap:address location="http://localhost:8081/apples-ecommerce-ws/services/Customer"/>
 
       </wsdl:port>
 

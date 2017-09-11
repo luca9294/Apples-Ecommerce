@@ -24,44 +24,7 @@ public class Customer implements CustomerInt {
 	public CustomerObject modify(String salutation, String name,
 			String surname, String country, String province,
 			String city, String street,	String streetNo, String zip, String email, String pwd){
-    	
-    	/*
-		CustomerObject customer = null;
-		ResultSet resultSet;
-		PreparedStatement preparedStatement;
-		Connection connection = ConnectionManager.connect();
-		try {
-			preparedStatement = connection.prepareStatement(
-					"UPDATE customer SET salutation = ? , firstname = ? , lastname = ? , " +
-							"country = ? , province = ? , city = ?, email = ? , " +
-							"\"streetNo\" = ? , zip = ?, email = ? , pwd = ?"+
-							"WHERE address_id = "+this.currentCustomer.getId()+
-							"RETURNING customer_id;");
-			preparedStatement.setString(1, salutation);
-			preparedStatement.setString(2, name);
-			preparedStatement.setString(3, surname);
-			preparedStatement.setString(4, country);
-			preparedStatement.setString(5, province);
-			preparedStatement.setString(6, city);
-			preparedStatement.setString(7, street);
-			preparedStatement.setString(8, streetNo);
-			preparedStatement.setString(9, zip);
-			preparedStatement.setString(10, email);
-			preparedStatement.setString(11, pwd);
-			resultSet = preparedStatement.executeQuery();
-			if (resultSet.next()) {
-				customer = new CustomerObject(resultSet.getInt(1),salutation,name,surname,country,province,
-						city,street,street,zip,email,pwd,resultSet.getString(10));
-			}
-			preparedStatement.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			ConnectionManager.close(connection);
-		}
-		return customer;
-		
-		*/
+
     	return null;
 	}	
 	
@@ -84,15 +47,28 @@ public class Customer implements CustomerInt {
 	}
 
 
-    @WebResult(name="CustomerObject")
     @Override 
-	public CustomerObject find(int id, String encryptedPassword) {
-    	/*
-		CustomerObject customer = findById(id);
-		return CustomerUtilities.updateCustomerKeys(customer, encryptedPassword);
-		*/
+	public int findByEmail(String email) {
+    	int result = 0;;
+		ResultSet resultSet;
+		PreparedStatement preparedStatement;
+		Connection connection = ConnectionManager.connect();
+		try {
+			preparedStatement = connection.prepareStatement(
+					"SELECT * FROM customer where email = ?");
+			preparedStatement.setString(1, email);
+			resultSet = preparedStatement.executeQuery();
+			resultSet.next();
+			result =  resultSet.getInt("customer_id");
+			preparedStatement.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return 0;
+		} finally {
+			ConnectionManager.close(connection);
+		}
     	
-    	return null;
+    	return result;
 	}
     
     @WebResult(name="CustomerObject")

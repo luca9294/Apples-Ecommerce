@@ -226,4 +226,10 @@ public class Cart implements interfaces.CartInt {
 		int randomNum = (int) (Math.pow(10, 8) + (Math.random() * (Math.pow(10, 6)-1)));
 		return (randomNum + "");
 	}
+
+	@Override
+	public boolean removeCartObject(int cart_id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

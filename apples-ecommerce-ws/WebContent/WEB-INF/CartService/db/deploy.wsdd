@@ -12,18 +12,21 @@
       <parameter name="typeMappingVersion" value="1.2"/>
       <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getGUUID" qname="operNS:getGUUID" returnQName="retNS:getGUUIDReturn" returnType="rtns:string" soapAction="">
       </operation>
-      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateCart" qname="operNS:updateCart" returnQName="retNS:updateCartReturn" returnType="rtns:boolean" soapAction="">
-        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:cart_id" type="tns:int"/>
-        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:product_id" type="tns:int"/>
-        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:quantity" type="tns:int"/>
-      </operation>
       <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="addCartEntry" qname="operNS:addCartEntry" returnQName="retNS:addCartEntryReturn" returnType="rtns:boolean" soapAction="">
         <parameter xmlns:pns="http://db" xmlns:tns="http://Serializables" qname="pns:co" type="tns:CartEntryObject"/>
       </operation>
       <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://Serializables" name="getCartContent" qname="operNS:getCartContent" returnQName="retNS:getCartContentReturn" returnType="rtns:CartEntryObject" soapAction="">
         <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:cart_id" type="tns:int"/>
       </operation>
-      <parameter name="allowedMethods" value="addCartEntry getGUUID updateCart getCartContent"/>
+      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="removeCartObject" qname="operNS:removeCartObject" returnQName="retNS:removeCartObjectReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:cart_id" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="updateCart" qname="operNS:updateCart" returnQName="retNS:updateCartReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:cart_id" type="tns:int"/>
+        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:product_id" type="tns:int"/>
+        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:quantity" type="tns:int"/>
+      </operation>
+      <parameter name="allowedMethods" value="removeCartObject addCartEntry getGUUID updateCart getCartContent"/>
 
       <typeMapping xmlns:ns="http://Serializables" qname="ns:CartEntryObject" type="java:Serializables.CartEntryObject" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
   </service>

@@ -17,7 +17,7 @@ public interface CartInt {
 	 * @return
 	 */
 	public boolean addCartEntry (CartEntryObject co);
-//	public boolean removeCartObject ()
+    public boolean removeCartObject (int cart_id);
 	
 	@WebMethod
 	/**

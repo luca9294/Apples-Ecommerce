@@ -7,8 +7,8 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name = "CardObject")
 public class CardObject {
-	@XmlElement(name = "customer_id")
-	private int customer_id;
+	@XmlElement(name = "email")
+	private String email;
 	@XmlElement(name = "month")
 	private int month;
 	@XmlElement(name = "year")
@@ -27,10 +27,10 @@ public class CardObject {
 	public CardObject() {
 	}
 
-	public CardObject(int customer_id, int month, int year, String key, String number, String vvc, String cName,
+	public CardObject(String email, int month, int year, String key, String number, String vvc, String cName,
 			int lastChars) {
 		this.cName = cName;
-		this.customer_id = customer_id;
+		this.email = email;
 		this.month = month;
 		this.year = year;
 		this.key = key;
@@ -39,8 +39,8 @@ public class CardObject {
 		this.lastChars = lastChars;
 	}
 
-	public int getCustomerId() {
-		return customer_id;
+	public String getEmail() {
+		return email;
 	}
 
 	public String getVvc() {

@@ -29,6 +29,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      <element name="price" type="xsd:int"/>
      <element name="price_type" type="xsd:int"/>
      <element name="product_id" type="xsd:int"/>
+     <element name="quantity" type="xsd:int"/>
      <element name="summary" nillable="true" type="xsd:string"/>
      <element name="title" nillable="true" type="xsd:string"/>
     </sequence>
@@ -96,7 +97,7 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       <wsdl:port binding="impl:ProductSoapBinding" name="Product">
 
-         <wsdlsoap:address location="http://localhost:8080/apples-ecommerce-ws/services/Product"/>
+         <wsdlsoap:address location="http://localhost:8081/apples-ecommerce-ws/services/Product"/>
 
       </wsdl:port>
 

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><!-- Use this file to deploy some handlers/chains and services      --><!-- Two ways to do this:                                           --><!--   java org.apache.axis.client.AdminClient deploy.wsdd          --><!--      after the axis server is running                          --><!-- or                                                             --><!--   java org.apache.axis.utils.Admin client|server deploy.wsdd   --><!--      from the same directory that the Axis engine runs         --><deployment xmlns="http://xml.apache.org/axis/wsdd/" xmlns:java="http://xml.apache.org/axis/wsdd/providers/java">
+
+  <!-- Services from OrderService WSDL service -->
+
+  <service name="Order" provider="java:RPC" style="wrapped" use="literal">
+      <parameter name="wsdlTargetNamespace" value="http://db"/>
+      <parameter name="wsdlServiceElement" value="OrderService"/>
+      <parameter name="schemaQualified" value="http://Serializables,http://db"/>
+      <parameter name="wsdlServicePort" value="Order"/>
+      <parameter name="className" value="db.Order"/>
+      <parameter name="wsdlPortType" value="Order"/>
+      <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="addOrder" qname="operNS:addOrder" returnQName="retNS:addOrderReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:order_id" type="tns:int"/>
+        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:cart_id" type="tns:int"/>
+        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:customer_id" type="tns:int"/>
+        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:lastChars" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getGUUID" qname="operNS:getGUUID" returnQName="retNS:getGUUIDReturn" returnType="rtns:string" soapAction="">
+      </operation>
+      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="deleteOrder" qname="operNS:deleteOrder" returnQName="retNS:deleteOrderReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:order_id" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://Serializables" name="getOrders" qname="operNS:getOrders" returnQName="retNS:getOrdersReturn" returnType="rtns:OrderObject" soapAction="">
+        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:customer_id" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="changeOrderStatus" qname="operNS:changeOrderStatus" returnQName="retNS:changeOrderStatusReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:order_id" type="tns:int"/>
+        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:newStatus" type="tns:int"/>
+      </operation>
+      <parameter name="allowedMethods" value="changeOrderStatus addOrder deleteOrder getGUUID getOrders"/>
+
+      <typeMapping xmlns:ns="http://Serializables" qname="ns:OrderObject" type="java:Serializables.OrderObject" serializer="org.apache.axis.encoding.ser.BeanSerializerFactory" deserializer="org.apache.axis.encoding.ser.BeanDeserializerFactory" encodingStyle=""/>
+  </service>
+</deployment>

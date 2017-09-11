@@ -30,29 +30,19 @@ public class LoginService implements interfaces.LoginServiceInt {
 		try {
 			connection.setAutoCommit(false);
 			preparedStatement = connection.prepareStatement(
-					"INSERT INTO customer (firstname, lastname,email, phoneNumber, organization " +
-							"city, address, zip" +
-							"VALUES (?, ?, ?, ?, ?, ?, ?, ?) " +
-					"RETURNING customer_id");
+					"INSERT INTO customer(firstname, lastname, city, address, zip, email, num, organization)"+
+					"VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
 			preparedStatement.setString(1, firstname);
 			preparedStatement.setString(2, lastname);
-			preparedStatement.setString(3, email);
-			preparedStatement.setInt(4, phoneNumber);
-			preparedStatement.setString(5, organization);
-			preparedStatement.setString(6, city);
-			preparedStatement.setString(7, address);
-			preparedStatement.setString(8, zip);
+			preparedStatement.setString(3, city);
+			preparedStatement.setString(4, address);
+			preparedStatement.setString(5, zip);
+			preparedStatement.setString(6, email);
+			preparedStatement.setString(7, phoneNumber+"");
+			preparedStatement.setString(8, organization);
 			// Retrieve the result of RETURNING statement to get the current id.
-			resultSet = preparedStatement.executeQuery();
-			if (resultSet.next()) {				
-				customer = new CustomerObject(firstname, lastname, email, phoneNumber,organization, city,
-						address, zip);
-				connection.commit();			
-			}
-			else {
-				connection.rollback();
-				return false;
-			}
+		
+			preparedStatement.executeUpdate();
 			preparedStatement.close();
 			connection.setAutoCommit(true);
 		} catch (SQLException e) {
