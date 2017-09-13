@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.UUID;
 import javax.jws.WebService;
 
@@ -21,6 +22,7 @@ public class Order implements interfaces.OrderInt {
 	 */
 	@Override
   public boolean addOrder (int order_id, int cart_id, int customer_id, int lastChars) {
+		updateQuantity(cart_id);
 		ResultSet resultSet;
 		PreparedStatement preparedStatement=null;
 		Connection connection = null;
@@ -122,7 +124,52 @@ public class Order implements interfaces.OrderInt {
 
 		return a;
 	}
-	
+	/**
+	* When a order is sent the quantity must be updated
+	*/
+	private void updateQuantity(int cart_id){
+	  HashMap<Integer, Integer> hm = new HashMap<Integer, Integer>();
+	  ResultSet resultSet;
+		PreparedStatement preparedStatement=null;
+		Connection connection = null;
+    try {
+			connection = ConnectionManager.connect();
+			connection.setAutoCommit(false);
+			preparedStatement = connection.prepareStatement("SELECT * FROM cart WHERE cart_id = ?");
+			preparedStatement.setInt(1, cart_id);
+			resultSet = preparedStatement.executeQuery();
+			while(resultSet.next()) {
+				
+          hm.put(resultSet.getInt("product_id"),resultSet.getInt("quantity"));
+			}
+			connection.close();
+			}
+		catch (SQLException e) {
+			  e.printStackTrace();
+		} finally {
+			ConnectionManager.close(connection);
+		}
+	  
+	  for ( int key : hm.keySet() ) {
+        preparedStatement=null;
+	    resultSet = null;
+	     connection = null;
+    try {
+			connection = ConnectionManager.connect();
+			connection.setAutoCommit(false);
+			preparedStatement = connection.prepareStatement("UPDATE products SET availability = ? WHERE product_id = ?");
+			preparedStatement.setInt(1, hm.get(key));
+			preparedStatement.setInt(2, key);
+			preparedStatement.executeUpdate();
+			connection.close();
+			}
+		catch (SQLException e) {
+			  e.printStackTrace();
+		} finally {
+			ConnectionManager.close(connection);
+		}
+  }
+	}
 	 /**
 	 * Get Total
 	 * @param order_id
