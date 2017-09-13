@@ -5,6 +5,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.UUID;
 import javax.jws.WebService;
 
@@ -128,7 +130,8 @@ public class Order implements interfaces.OrderInt {
 	* When a order is sent the quantity must be updated
 	*/
 	private void updateQuantity(int cart_id){
-	  HashMap<Integer, Integer> hm = new HashMap<Integer, Integer>();
+	  List<Integer> products = new LinkedList<Integer>();
+	  HashMap<String, Integer> hm = new HashMap<String, Integer>();
 	  ResultSet resultSet;
 		PreparedStatement preparedStatement=null;
 		Connection connection = null;
@@ -139,8 +142,8 @@ public class Order implements interfaces.OrderInt {
 			preparedStatement.setInt(1, cart_id);
 			resultSet = preparedStatement.executeQuery();
 			while(resultSet.next()) {
-				
-          hm.put(resultSet.getInt("product_id"),resultSet.getInt("quantity"));
+				products.add(resultSet.getInt("product_id"));
+                hm.put(resultSet.getInt("product_id")+"",resultSet.getInt("quantity"));
 			}
 			connection.close();
 			}
@@ -150,23 +153,23 @@ public class Order implements interfaces.OrderInt {
 			ConnectionManager.close(connection);
 		}
 	  
-	  for ( int key : hm.keySet() ) {
-        preparedStatement=null;
-	    resultSet = null;
-	     connection = null;
+	  for ( int product : products) {
+		  PreparedStatement preparedStatement1 = null;
+		  Connection connection1 = null;
     try {
-			connection = ConnectionManager.connect();
-			connection.setAutoCommit(false);
-			preparedStatement = connection.prepareStatement("UPDATE products SET availability = ? WHERE product_id = ?");
-			preparedStatement.setInt(1, hm.get(key));
-			preparedStatement.setInt(2, key);
-			preparedStatement.executeUpdate();
-			connection.close();
+			connection1 = ConnectionManager.connect();
+			connection1.setAutoCommit(false);
+			preparedStatement1 = connection1.prepareStatement("UPDATE products SET quantity =  quantity - ? WHERE product_id = ?");
+			preparedStatement1.setInt(1, hm.get(product+""));
+			preparedStatement1.setInt(2, product);
+			preparedStatement1.executeUpdate();
+			connection1.commit();
+			connection1.close();
 			}
 		catch (SQLException e) {
 			  e.printStackTrace();
 		} finally {
-			ConnectionManager.close(connection);
+			ConnectionManager.close(connection1);
 		}
   }
 	}

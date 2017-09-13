@@ -32,20 +32,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
-   <element name="deleteOrder">
-    <complexType>
-     <sequence>
-      <element name="order_id" type="xsd:int"/>
-     </sequence>
-    </complexType>
-   </element>
-   <element name="deleteOrderResponse">
-    <complexType>
-     <sequence>
-      <element name="deleteOrderReturn" type="xsd:boolean"/>
-     </sequence>
-    </complexType>
-   </element>
    <element name="getOrders">
     <complexType>
      <sequence>
@@ -57,6 +43,20 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
     <complexType>
      <sequence>
       <element maxOccurs="unbounded" name="getOrdersReturn" type="tns1:OrderObject"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteOrder">
+    <complexType>
+     <sequence>
+      <element name="order_id" type="xsd:int"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="deleteOrderResponse">
+    <complexType>
+     <sequence>
+      <element name="deleteOrderReturn" type="xsd:boolean"/>
      </sequence>
     </complexType>
    </element>
@@ -195,18 +195,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="deleteOrder">
-
-         <wsdl:input message="impl:deleteOrderRequest" name="deleteOrderRequest">
-
-       </wsdl:input>
-
-         <wsdl:output message="impl:deleteOrderResponse" name="deleteOrderResponse">
-
-       </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="getOrders">
 
          <wsdl:input message="impl:getOrdersRequest" name="getOrdersRequest">
@@ -214,6 +202,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
        </wsdl:input>
 
          <wsdl:output message="impl:getOrdersResponse" name="getOrdersResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteOrder">
+
+         <wsdl:input message="impl:deleteOrderRequest" name="deleteOrderRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:deleteOrderResponse" name="deleteOrderResponse">
 
        </wsdl:output>
 
@@ -273,24 +273,6 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
       </wsdl:operation>
 
-      <wsdl:operation name="deleteOrder">
-
-         <wsdlsoap:operation soapAction=""/>
-
-         <wsdl:input name="deleteOrderRequest">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:input>
-
-         <wsdl:output name="deleteOrderResponse">
-
-            <wsdlsoap:body use="literal"/>
-
-         </wsdl:output>
-
-      </wsdl:operation>
-
       <wsdl:operation name="getOrders">
 
          <wsdlsoap:operation soapAction=""/>
@@ -302,6 +284,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="getOrdersResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="deleteOrder">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="deleteOrderRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="deleteOrderResponse">
 
             <wsdlsoap:body use="literal"/>
 

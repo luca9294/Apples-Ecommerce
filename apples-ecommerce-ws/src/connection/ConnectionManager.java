@@ -9,7 +9,7 @@ public class ConnectionManager {
 	ResultSet rs = null;
 
 	//public static final String url = "jdbc:postgresql://54.202.224.165/postgres";
-	public static final String url = "jdbc:postgresql://localhost/postgres";
+	public static final String url = "jdbc:postgresql://34.211.54.69/postgres";
 	public static final String user = "power_user";
 	public static final String pw = "postgres";
 	//public static final String url = "jdbc:postgresql://alcor.inf.unibz.it/ds_group9";

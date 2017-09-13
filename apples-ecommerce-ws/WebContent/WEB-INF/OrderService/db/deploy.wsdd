@@ -18,11 +18,11 @@
       </operation>
       <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="getGUUID" qname="operNS:getGUUID" returnQName="retNS:getGUUIDReturn" returnType="rtns:string" soapAction="">
       </operation>
-      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="deleteOrder" qname="operNS:deleteOrder" returnQName="retNS:deleteOrderReturn" returnType="rtns:boolean" soapAction="">
-        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:order_id" type="tns:int"/>
-      </operation>
       <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://Serializables" name="getOrders" qname="operNS:getOrders" returnQName="retNS:getOrdersReturn" returnType="rtns:OrderObject" soapAction="">
         <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:customer_id" type="tns:int"/>
+      </operation>
+      <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="deleteOrder" qname="operNS:deleteOrder" returnQName="retNS:deleteOrderReturn" returnType="rtns:boolean" soapAction="">
+        <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:order_id" type="tns:int"/>
       </operation>
       <operation xmlns:operNS="http://db" xmlns:retNS="http://db" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="changeOrderStatus" qname="operNS:changeOrderStatus" returnQName="retNS:changeOrderStatusReturn" returnType="rtns:boolean" soapAction="">
         <parameter xmlns:pns="http://db" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:order_id" type="tns:int"/>
